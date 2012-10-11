@@ -1,0 +1,83 @@
+<?xml version="1.0"?>
+<!-- This file is part of account_payment_type module for Tryton.
+The COPYRIGHT file at the top level of this repository contains the full
+copyright notices and license terms. -->
+<tryton>
+    <data>
+        <!-- Menu Top -->
+        <menuitem name="Payment Types" parent="account.menu_account_configuration"
+            id="menu_payment_types_configuration"/>
+
+        <!-- account.payment.type -->
+        <record model="ir.ui.view" id="account_payment_type_view_form">
+            <field name="model">account.payment.type</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <![CDATA[
+                <form string="Payment Type" col="4">
+                    <label name="name"/>
+                    <field name="name"/>
+                    <label name="code"/>
+                    <field name="code"/>
+                    <label name="active"/>
+                    <field name="active"/>
+                    <label name="company"/>
+                    <field name="company" widget="selection"/>
+                    <newline/>
+                    <separator name="note" colspan="4"/>
+                    <field name="note" colspan="4"/>
+                </form>
+                ]]>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="account_payment_type_view_tree">
+            <field name="model">account.payment.type</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <![CDATA[
+                <tree string="Payment Type">
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="company"/>
+                    <field name="active"/>
+                </tree>
+                ]]>
+            </field>
+        </record>
+
+        <!-- Actions / Menu -->
+        <record model="ir.action.act_window" id="act_window_account_payment_type">
+            <field name="name">Payment Types</field>
+            <field name="res_model">account.payment.type</field>
+        </record>
+        <record model="ir.action.act_window.view" id="act_window_account_payment_type_tree">
+            <field name="sequence" eval="10"/>
+            <field name="view" ref="account_payment_type_view_tree"/>
+            <field name="act_window" ref="act_window_account_payment_type"/>
+        </record>
+        <record model="ir.action.act_window.view" id="act_window_account_payment_type_form">
+            <field name="sequence" eval="20"/>
+            <field name="view" ref="account_payment_type_view_form"/>
+            <field name="act_window" ref="act_window_account_payment_type"/>
+        </record>
+        <menuitem parent="menu_payment_types_configuration" action="act_window_account_payment_type"
+            id="menu_account_payment_type_form"/>
+
+        <!-- Access -->
+        <record model="ir.model.access" id="access_account_payment_type">
+            <field name="model" search="[('model', '=', 'account.payment.type')]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_delete" eval="False"/>
+        </record>
+        <record model="ir.model.access" id="access_account_payment_type_admin">
+            <field name="model" search="[('model', '=', 'account.payment.type')]"/>
+            <field name="group" ref="account.group_account_admin"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_delete" eval="True"/>
+        </record>
+    </data>
+</tryton>

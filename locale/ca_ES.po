@@ -1,0 +1,99 @@
+# 
+msgid ""
+msgstr "Content-Type: text/plain; charset=utf-8\n"
+
+msgctxt "field:account.invoice,payment_type:"
+msgid "Payment Type"
+msgstr "Tipus de pagament"
+
+msgctxt "field:account.move.line,payment_type:"
+msgid "Payment Type"
+msgstr "Tipus de pagament"
+
+msgctxt "field:account.payment.type,active:"
+msgid "Active"
+msgstr "Actiu"
+
+msgctxt "field:account.payment.type,code:"
+msgid "Code"
+msgstr "Codi"
+
+msgctxt "field:account.payment.type,company:"
+msgid "Company"
+msgstr "Empresa"
+
+msgctxt "field:account.payment.type,create_date:"
+msgid "Create Date"
+msgstr "Data creació"
+
+msgctxt "field:account.payment.type,create_uid:"
+msgid "Create User"
+msgstr "Crear usuari"
+
+msgctxt "field:account.payment.type,id:"
+msgid "ID"
+msgstr "ID"
+
+msgctxt "field:account.payment.type,name:"
+msgid "Name"
+msgstr "Nom"
+
+msgctxt "field:account.payment.type,note:"
+msgid "Description"
+msgstr "Descripció"
+
+msgctxt "field:account.payment.type,rec_name:"
+msgid "Name"
+msgstr "Nom"
+
+msgctxt "field:account.payment.type,write_date:"
+msgid "Write Date"
+msgstr "Data modificació"
+
+msgctxt "field:account.payment.type,write_uid:"
+msgid "Write User"
+msgstr "Usuari modificació"
+
+msgctxt "field:party.party,customer_payment_type:"
+msgid "Customer Payment type"
+msgstr "Tipus pagament client"
+
+msgctxt "field:party.party,supplier_payment_type:"
+msgid "Supplier Payment type"
+msgstr "Tipus de pagament de proveïdor"
+
+msgctxt "help:account.payment.type,note:"
+msgid "Description of the payment type that will be shown in descriptions"
+msgstr "Informació extra que es mostrarà a les descripcions"
+
+msgctxt "help:party.party,customer_payment_type:"
+msgid "Payment type of the customer."
+msgstr "Tipus de pagament del client."
+
+msgctxt "help:party.party,supplier_payment_type:"
+msgid "Payment type of the supplier."
+msgstr "Tipus de pagament del proveïdor."
+
+msgctxt "model:account.payment.type,name:"
+msgid "Account Payment Type"
+msgstr "Tipus de pagaments"
+
+msgctxt "model:ir.action,name:act_window_account_payment_type"
+msgid "Payment Types"
+msgstr "Tipus de pagaments"
+
+msgctxt "model:ir.ui.menu,name:menu_account_payment_type_form"
+msgid "Payment Types"
+msgstr "Tipus de pagaments"
+
+msgctxt "model:ir.ui.menu,name:menu_payment_types_configuration"
+msgid "Payment Types"
+msgstr "Tipus de pagaments"
+
+msgctxt "view:account.payment.type:"
+msgid "Payment Type"
+msgstr "Tipus de pagaments"
+
+msgctxt "view:party.party:"
+msgid "Payment types"
+msgstr "Tipus de pagaments"

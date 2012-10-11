@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!-- This file is part of account_payment_type module for Tryton.
+The COPYRIGHT file at the top level of this repository contains the full
+copyright notices and license types. -->
+<tryton>
+    <data>
+        <record model="ir.ui.view" id="party_view_form">
+            <field name="model">party.party</field>
+            <field name="inherit" ref="party.party_view_form"/>
+            <field name="arch" type="xml">
+                <![CDATA[
+                <data>
+                    <xpath
+                        expr="/form/notebook/page[@id=&quot;accounting&quot;]/field[@name=&quot;vat_number&quot;]"
+                        position="after">
+                        <separator string="Payment types" colspan="4" id="payment_types"/>
+                        <label name="customer_payment_type"/>
+                        <field name="customer_payment_type"/>
+                        <label name="supplier_payment_type"/>
+                        <field name="supplier_payment_type"/>
+                    </xpath>
+                </data>
+                ]]>
+            </field>
+        </record>
+    </data>
+</tryton>
