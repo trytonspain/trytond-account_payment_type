@@ -13,7 +13,7 @@ class AccountPaymentType(ModelSQL, ModelView):
     __name__ = 'account.payment.type'
 
     name = fields.Char('Name', required=True, translate=True)
-    code = fields.Char('Code', required=True)
+    code = fields.Char('Code')
     active = fields.Boolean('Active')
     company = fields.Many2One('company.company', 'Company', required=True,
         select=True, readonly=True)
@@ -27,3 +27,9 @@ class AccountPaymentType(ModelSQL, ModelView):
     @staticmethod
     def default_company():
         return Transaction().context.get('company')
+
+    def get_rec_name(self, name):
+        if self.code:
+            return '[' + self.code + '] ' + self.name
+        else:
+            return self.name
