@@ -27,20 +27,20 @@ for dep in info.get('depends', []):
 requires.append('trytond >= %s.%s, < %s.%s' %
         (major_version, minor_version, major_version, minor_version + 1))
 
-setup(name='trytond_account_payment_type',
+setup(name='trytonzz_account_payment_type',
     version=info.get('version', '0.0.1'),
     description='Tryton module for Account Payment Type',
     author='Zikzakmedia SL',
     author_email='zikzak@zikzakmedia.com',
     url='http://www.zikzakmedia.com',
-    download_url="https://bitbucket.org/zikzakmedia/trytond-account_payment_type",
-    package_dir={'trytond.modules.account_payment_type': '.'},
+    download_url="https://bitbucket.org/zikzakmedia/trytonzz-account_payment_type",
+    package_dir={'trytonzz.modules.account_payment_type': '.'},
     packages=[
-        'trytond.modules.account_payment_type',
-        'trytond.modules.account_payment_type.tests',
+        'trytonzz.modules.account_payment_type',
+        'trytonzz.modules.account_payment_type.tests',
     ],
     package_data={
-        'trytond.modules.account_payment_type': info.get('xml', []) \
+        'trytonzz.modules.account_payment_type': info.get('xml', []) \
             + ['tryton.cfg', 'locale/*.po'],
 
     },
@@ -64,9 +64,9 @@ setup(name='trytond_account_payment_type',
     install_requires=requires,
     zip_safe=False,
     entry_points="""
-    [trytond.modules]
-    account_payment_type = trytond.modules.account_payment_type
+    [trytonzz.modules]
+    account_payment_type = trytonzz.modules.account_payment_type
     """,
     test_suite='tests',
-    test_loader='trytond.test_loader:Loader',
+    test_loader='trytonzz.test_loader:Loader',
 )
