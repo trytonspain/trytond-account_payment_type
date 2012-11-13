@@ -33,14 +33,14 @@ setup(name='trytonzz_account_payment_type',
     author='Zikzakmedia SL',
     author_email='zikzak@zikzakmedia.com',
     url='http://www.zikzakmedia.com',
-    download_url="https://bitbucket.org/zikzakmedia/trytonzz-account_payment_type",
-    package_dir={'trytonzz.modules.account_payment_type': '.'},
+    download_url="https://bitbucket.org/zikzakmedia/trytond-account_payment_type",
+    package_dir={'trytond.modules.account_payment_type': '.'},
     packages=[
-        'trytonzz.modules.account_payment_type',
-        'trytonzz.modules.account_payment_type.tests',
+        'trytond.modules.account_payment_type',
+        'trytond.modules.account_payment_type.tests',
     ],
     package_data={
-        'trytonzz.modules.account_payment_type': info.get('xml', []) \
+        'trytond.modules.account_payment_type': info.get('xml', []) \
             + ['tryton.cfg', 'locale/*.po'],
 
     },
@@ -64,9 +64,9 @@ setup(name='trytonzz_account_payment_type',
     install_requires=requires,
     zip_safe=False,
     entry_points="""
-    [trytonzz.modules]
-    account_payment_type = trytonzz.modules.account_payment_type
+    [trytond.modules]
+    account_payment_type = trytond.modules.account_payment_type
     """,
     test_suite='tests',
-    test_loader='trytonzz.test_loader:Loader',
+    test_loader='trytond.test_loader:Loader',
 )
