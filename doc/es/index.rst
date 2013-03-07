@@ -8,8 +8,8 @@ Tipos de pagos
   tanto en ventas como en compras. Cuando se seleccione este tercero, el tipo
   de pago asignado por defecto será el que tiene por defecto el mismo.
 
-Módulos que dependen
-====================
+Módulos de los que depende
+==========================
 
 Instalados
 ----------
