@@ -19,3 +19,24 @@ class Line:
 
     payment_type = fields.Many2One('account.payment.type',
         'Payment Type', states=_STATES, depends=_DEPENDS)
+
+    @classmethod
+    def __setup__(cls):
+        super(Line, cls).__setup__()
+        cls._error_messages.update({
+                'invalid_account_payment_type': ('Can not set Payment Type in '
+                    'move line "%s" because account is not Payable nor '
+                    'Receivable.'),
+                })
+
+    @classmethod
+    def validate(cls, lines):
+        super(Line, cls).validate(lines)
+        for line in lines:
+            line.check_account_payment_type()
+
+    def check_account_payment_type(self):
+        if (self.payment_type
+                and self.account.kind not in ('payable', 'receivable')):
+            self.raise_user_error('invalid_account_payment_type',
+                (self.rec_name,))
