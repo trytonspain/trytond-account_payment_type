@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<data>
+    <xpath
+    expr="/form/field[@name=&quot;account&quot;]"
+    position="after">
+        <label name="payment_type"/>
+        <field name="payment_type"/>
+    </xpath>
+</data>
+

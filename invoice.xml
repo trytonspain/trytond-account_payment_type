@@ -8,18 +8,7 @@ copyright notices and license terms. -->
             <field name="model">account.invoice</field>
             <field name="type">form</field>
             <field name="inherit" ref="account_invoice.invoice_view_form"/>
-            <field name="arch" type="xml">
-                <![CDATA[
-                <data>
-                    <xpath
-                            expr="/form/notebook/page[@id=&quot;invoice&quot;]/field[@name=&quot;payment_term&quot;]"
-                            position="after">
-                        <label name="payment_type"/>
-                        <field name="payment_type"/>
-                    </xpath>
-                </data>
-                ]]>
-            </field>
+            <field name="name">invoice_form</field>
         </record>
     </data>
 </tryton>

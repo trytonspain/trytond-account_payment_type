@@ -9,18 +9,7 @@ copyright notices and license terms. -->
             <field name="type">form</field>
             <field name="inherit" ref="account.move_line_view_form_move"/>
             <field name="priority" eval="10"/>
-            <field name="arch" type="xml">
-                <![CDATA[
-                <data>
-                    <xpath
-                            expr="/form/field[@name=&quot;account&quot;]"
-                            position="after">
-                        <label name="payment_type"/>
-                        <field name="payment_type"/>
-                    </xpath>
-                </data>
-                ]]>
-            </field>
+            <field name="name">move_line_form_move</field>
         </record>
     </data>
 </tryton>

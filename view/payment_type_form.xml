@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<form string="Payment Type" col="4">
+    <label name="name"/>
+    <field name="name"/>
+    <label name="code"/>
+    <field name="code"/>
+    <label name="active"/>
+    <field name="active"/>
+    <label name="company"/>
+    <field name="company" widget="selection"/>
+    <newline/>
+    <separator name="note" colspan="4"/>
+    <field name="note" colspan="4"/>
+</form>
+
