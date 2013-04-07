@@ -3,14 +3,14 @@
 #the full copyright notices and license terms.
 
 from trytond.pool import Pool
-from .account_payment_type import *
+from .payment_type import *
 from .party import *
 from .invoice import *
 from .move import *
 
 def register():
     Pool.register(
-        AccountPaymentType,
+        PaymentType,
         Party,
         Invoice,
         Line,
