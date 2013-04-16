@@ -135,7 +135,7 @@ class AccountPaymentTypeTestCase(unittest.TestCase):
         Test account debit/credit.
         '''
         with Transaction().start(DB_NAME, USER,
-                context=CONTEXT) as transaction:
+                context=CONTEXT):
             fiscalyear, = self.fiscalyear.search([])
             period = fiscalyear.periods[0]
             journal_revenue, = self.journal.search([

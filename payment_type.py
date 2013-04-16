@@ -16,7 +16,11 @@ class PaymentType(ModelSQL, ModelView):
     code = fields.Char('Code')
     active = fields.Boolean('Active')
     company = fields.Many2One('company.company', 'Company', required=True,
-        select=True, readonly=True)
+        select=True, readonly=True, domain=[
+		    ('id', If(Eval('context', {}).contains('company'), '=', 
+				    '!='),
+			    Eval('context', {}).get('company', 0)),
+		    ])
     note = fields.Text('Description', translate=True,
         help='Description of the payment type that will be shown in descriptions')
 
