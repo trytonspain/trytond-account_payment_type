@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
-#This file is part of account_payment_type module for Tryton.
-#The COPYRIGHT file at the top level of this repository contains 
-#the full copyright notices and license terms.
+# This file is part of account_payment_type module for Tryton.
+# The COPYRIGHT file at the top level of this repository contains
+# the full copyright notices and license terms.
 
 import sys
 import os
@@ -141,9 +141,6 @@ class AccountPaymentTypeTestCase(unittest.TestCase):
             journal_revenue, = self.journal.search([
                     ('code', '=', 'REV'),
                     ])
-            journal_expense, = self.journal.search([
-                    ('code', '=', 'EXP'),
-                    ])
             revenue, = self.account.search([
                     ('kind', '=', 'revenue'),
                     ])
@@ -184,7 +181,6 @@ class AccountPaymentTypeTestCase(unittest.TestCase):
                             'credit': Decimal(30),
                             'payment_type': payment_type,
                             }])
-
             self.move_line.create([{
                             'move': move.id,
                             'account': expense.id,
