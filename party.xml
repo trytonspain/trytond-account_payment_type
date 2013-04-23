@@ -7,21 +7,8 @@ copyright notices and license types. -->
         <record model="ir.ui.view" id="party_view_form">
             <field name="model">party.party</field>
             <field name="inherit" ref="party.party_view_form"/>
-            <field name="arch" type="xml">
-                <![CDATA[
-                <data>
-                    <xpath
-                        expr="/form/notebook/page[@id=&quot;accounting&quot;]/field[@name=&quot;vat_number&quot;]"
-                        position="after">
-                        <separator string="Payment types" colspan="4" id="payment_types"/>
-                        <label name="customer_payment_type"/>
-                        <field name="customer_payment_type"/>
-                        <label name="supplier_payment_type"/>
-                        <field name="supplier_payment_type"/>
-                    </xpath>
-                </data>
-                ]]>
-            </field>
+            <field name="arch" type="xml"/>
+            <field name="name">party_form</field>
         </record>
     </data>
 </tryton>
