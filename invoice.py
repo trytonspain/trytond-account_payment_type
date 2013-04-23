@@ -1,10 +1,10 @@
-#This file is part of account_payment_type module for Tryton.
-#The COPYRIGHT file at the top level of this repository contains 
-#the full copyright notices and license terms.
+# This file is part of account_payment_type module for Tryton.
+# The COPYRIGHT file at the top level of this repository contains
+# the full copyright notices and license terms.
 
 from trytond.model import fields
 from trytond.pool import PoolMeta
-from trytond.pyson import Eval
+from trytond.pyson import Eval, If
 
 __all__ = ['Invoice']
 __metaclass__ = PoolMeta
@@ -14,12 +14,17 @@ _STATES = {
 }
 _DEPENDS = ['state']
 
+
 class Invoice:
     'Invoice'
     __name__ = 'account.invoice'
 
     payment_type = fields.Many2One('account.payment.type',
-        'Payment Type', states=_STATES, depends=_DEPENDS)
+        'Payment Type', states=_STATES, depends=_DEPENDS, domain=[
+            If(Eval('type').in_(['out_invoice', 'out_credit_note']),
+            ('kind', '=', 'receivable'),
+            ('kind', '=', 'payable')),
+            ])
 
     def __get_payment_type(self):
         '''
