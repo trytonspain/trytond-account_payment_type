@@ -1,12 +1,12 @@
-#This file is part of account_payment_type module for Tryton.
-#The COPYRIGHT file at the top level of this repository contains 
-#the full copyright notices and license terms.
+# This file is part of account_payment_type module for Tryton.
+# The COPYRIGHT file at the top level of this repository contains
+# the full copyright notices and license terms.
 
 from trytond.model import ModelView, ModelSQL, fields
 from trytond.transaction import Transaction
-from trytond.pyson import Eval, If
 
 __all__ = ['PaymentType']
+
 
 class PaymentType(ModelSQL, ModelView):
     'Payment Type'
@@ -22,7 +22,12 @@ class PaymentType(ModelSQL, ModelView):
 			    Eval('context', {}).get('company', 0)),
 		    ])
     note = fields.Text('Description', translate=True,
-        help='Description of the payment type that will be shown in descriptions')
+        help=('Description of the payment type that will be shown in '
+            'descriptions'))
+    kind = fields.Selection([
+        ('payable', 'Payable'),
+        ('receivable', 'Receivable'),
+        ], 'Kind of payment type.', required=True)
 
     @staticmethod
     def default_active():
