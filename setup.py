@@ -1,7 +1,7 @@
 #!/usr/bin/env python
-#This file is part of account_payment_type module for Tryton.
-#The COPYRIGHT file at the top level of this repository contains
-#the full copyright notices and license terms.
+# This file is part of account_payment_type module for Tryton.
+# The COPYRIGHT file at the top level of this repository contains
+# the full copyright notices and license terms.
 
 from setuptools import setup
 import re
@@ -32,7 +32,8 @@ setup(name='trytonspain_account_payment_type',
     author='Zikzakmedia SL',
     author_email='zikzak@zikzakmedia.com',
     url='http://www.zikzakmedia.com',
-    download_url="https://bitbucket.org/trytonspain/trytond-account_payment_type",
+    download_url="https://bitbucket.org/trytonspain/"
+        "trytond-account_payment_type",
     package_dir={'trytond.modules.account_payment_type': '.'},
     packages=[
         'trytond.modules.account_payment_type',
