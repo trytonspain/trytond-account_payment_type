@@ -10,7 +10,7 @@ __all__ = ['Invoice']
 __metaclass__ = PoolMeta
 
 _STATES = {
-    'readonly': Eval('state') != 'draft',
+    'readonly': Eval('state') not in ['draft', 'validated'],
 }
 _DEPENDS = ['state']
 
@@ -38,6 +38,8 @@ class Invoice:
             elif self.type == 'in_invoice' \
                     and self.party.supplier_payment_type:
                 res['payment_type'] = self.party.supplier_payment_type.id
+        else:
+            res['payment_type'] = None
         if self.company and type in ('out_credit_note', 'in_credit_note'):
             if self.type == 'out_credit_note' \
                     and self.company.customer_payment_type:
