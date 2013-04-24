@@ -3,7 +3,7 @@
 # the full copyright notices and license terms.
 from trytond.model import fields
 from trytond.pool import PoolMeta
-from trytond.pyson import Eval
+from trytond.pyson import Eval, Bool
 
 __all__ = ['Line']
 __metaclass__ = PoolMeta
@@ -20,11 +20,15 @@ class Line:
     payment_type = fields.Many2One('account.payment.type',
         'Payment Type', domain=[
             ('kind', '=', Eval('account_kind')),
-            ], depends=['account_kind'])
+            ], depends=['account_kind'],
+        states={
+                'readonly': Bool(Eval('reconciliation')),
+            })
 
     @classmethod
     def __setup__(cls):
         super(Line, cls).__setup__()
+        cls._check_modify_include.append('payment_type')
         cls._error_messages.update({
                 'invalid_account_payment_type': ('Can not set Payment Type in '
                     'move line "%s" because account is not Payable nor '
