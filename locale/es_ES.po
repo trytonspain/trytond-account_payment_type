@@ -2,9 +2,17 @@
 msgid ""
 msgstr "Content-Type: text/plain; charset=utf-8\n"
 
+msgctxt "error:account.move.line:"
+msgid "Can not set Payment Type in move line \"%s\" because account is not Payable nor Receivable."
+msgstr "No se puede establecer el tipo de orden de pago del apunte \"%S\" porque la cuenta no es a pagar ni a cobrar."
+
 msgctxt "field:account.invoice,payment_type:"
 msgid "Payment Type"
 msgstr "Tipo de pago"
+
+msgctxt "field:account.move.line,account_kind:"
+msgid "Kind"
+msgstr "Clase"
 
 msgctxt "field:account.move.line,payment_type:"
 msgid "Payment Type"
@@ -34,6 +42,10 @@ msgctxt "field:account.payment.type,id:"
 msgid "ID"
 msgstr "ID"
 
+msgctxt "field:account.payment.type,kind:"
+msgid "Kind of payment type."
+msgstr "Clase de tipo de orden de pago."
+
 msgctxt "field:account.payment.type,name:"
 msgid "Name"
 msgstr "Nombre"
@@ -54,6 +66,46 @@ msgctxt "field:account.payment.type,write_uid:"
 msgid "Write User"
 msgstr "Usuario modificación"
 
+msgctxt "field:party.account.payment.type,company:"
+msgid "Company"
+msgstr "Empresa"
+
+msgctxt "field:party.account.payment.type,create_date:"
+msgid "Create Date"
+msgstr "Fecha creación"
+
+msgctxt "field:party.account.payment.type,create_uid:"
+msgid "Create User"
+msgstr "Usuario creación"
+
+msgctxt "field:party.account.payment.type,customer_payment_type:"
+msgid "Customer Payment type"
+msgstr "Tipo de pago del cliente"
+
+msgctxt "field:party.account.payment.type,id:"
+msgid "ID"
+msgstr "ID"
+
+msgctxt "field:party.account.payment.type,party:"
+msgid "Party"
+msgstr "Terceros"
+
+msgctxt "field:party.account.payment.type,rec_name:"
+msgid "Name"
+msgstr "Nombre"
+
+msgctxt "field:party.account.payment.type,supplier_payment_type:"
+msgid "Supplier Payment type"
+msgstr "Tipo de pago de proveedor"
+
+msgctxt "field:party.account.payment.type,write_date:"
+msgid "Write Date"
+msgstr "Fecha modificación"
+
+msgctxt "field:party.account.payment.type,write_uid:"
+msgid "Write User"
+msgstr "Usuario modificación"
+
 msgctxt "field:party.party,customer_payment_type:"
 msgid "Customer Payment type"
 msgstr "Tipo de pago del cliente"
@@ -64,32 +116,51 @@ msgstr "Tipo de pago de proveedor"
 
 msgctxt "help:account.payment.type,note:"
 msgid "Description of the payment type that will be shown in descriptions"
-msgstr ""
-"Información extra del tipo de pago que se mostrará en las descripciones"
+msgstr "Información extra del tipo de pago que se mostrará en las descripciones"
 
 msgctxt "help:party.party,customer_payment_type:"
 msgid "Payment type of the customer."
-msgstr "Tipo de pago del cliente."
+msgstr "Tipo de pago de cliente."
 
 msgctxt "help:party.party,supplier_payment_type:"
 msgid "Payment type of the supplier."
-msgstr "Tipo de pago del proveedor."
+msgstr "Tipo de pago de proveedor."
 
 msgctxt "model:account.payment.type,name:"
-msgid "Account Payment Type"
-msgstr "Tipo de pagos"
+msgid "Payment Type"
+msgstr "Tipo de pago"
 
 msgctxt "model:ir.action,name:act_window_account_payment_type"
 msgid "Payment Types"
-msgstr "Tipo de pagos"
+msgstr "Tipos de pago"
 
 msgctxt "model:ir.ui.menu,name:menu_account_payment_type_form"
 msgid "Payment Types"
-msgstr "Tipo de pago"
+msgstr "Tipos de pago"
 
 msgctxt "model:ir.ui.menu,name:menu_payment_types_configuration"
 msgid "Payment Types"
-msgstr "Tipo de pago"
+msgstr "Tipos de pago"
+
+msgctxt "model:party.account.payment.type,name:"
+msgid "Party Account Payment Type"
+msgstr "Tipo de orden de pago de tercero"
+
+msgctxt "selection:account.move.line,account_kind:"
+msgid "Payable"
+msgstr "A pagar"
+
+msgctxt "selection:account.move.line,account_kind:"
+msgid "Receivable"
+msgstr "A cobrar"
+
+msgctxt "selection:account.payment.type,kind:"
+msgid "Payable"
+msgstr "A pagar"
+
+msgctxt "selection:account.payment.type,kind:"
+msgid "Receivable"
+msgstr "A cobrar"
 
 msgctxt "view:account.payment.type:"
 msgid "Payment Type"
@@ -97,4 +168,4 @@ msgstr "Tipo de pago"
 
 msgctxt "view:party.party:"
 msgid "Payment types"
-msgstr "Tipos de pagos"
+msgstr "Tipos de pago"
