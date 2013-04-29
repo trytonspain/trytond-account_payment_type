@@ -28,7 +28,6 @@ class Line:
     @classmethod
     def __setup__(cls):
         super(Line, cls).__setup__()
-        cls._check_modify_include.append('payment_type')
         if hasattr(cls, '_check_modify_exclude'):
             cls._check_modify_exclude.append('payment_type')
         cls._error_messages.update({
