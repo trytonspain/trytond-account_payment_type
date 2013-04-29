@@ -4,27 +4,25 @@
 
 from trytond.model import fields
 from trytond.pool import PoolMeta
-from trytond.pyson import Eval, If
+from trytond.pyson import Bool, Eval, If, Not
 
 __all__ = ['Invoice']
 __metaclass__ = PoolMeta
-
-_STATES = {
-    'readonly': Eval('state') not in ['draft', 'validated'],
-}
-_DEPENDS = ['state']
 
 
 class Invoice:
     'Invoice'
     __name__ = 'account.invoice'
-
-    payment_type = fields.Many2One('account.payment.type',
-        'Payment Type', states=_STATES, depends=_DEPENDS, domain=[
+    payment_type = fields.Many2One('account.payment.type', 'Payment Type',
+        domain=[
             If(Eval('type').in_(['out_invoice', 'out_credit_note']),
             ('kind', '=', 'receivable'),
             ('kind', '=', 'payable')),
             ])
+        states={
+            'readonly': Not(Bool(Eval('state').in_(['draft', 'validated']))),
+            }, depends=['state', 'type'])
+
 
     def __get_payment_type(self):
         '''
