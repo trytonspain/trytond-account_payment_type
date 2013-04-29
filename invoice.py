@@ -18,7 +18,7 @@ class Invoice:
             If(Eval('type').in_(['out_invoice', 'out_credit_note']),
             ('kind', '=', 'receivable'),
             ('kind', '=', 'payable')),
-            ])
+            ],
         states={
             'readonly': Not(Bool(Eval('state').in_(['draft', 'validated']))),
             }, depends=['state', 'type'])
