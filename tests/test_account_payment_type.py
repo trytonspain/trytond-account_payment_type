@@ -125,9 +125,17 @@ class AccountPaymentTypeTestCase(unittest.TestCase):
     def test0030payment_type(self):
         with Transaction().start(DB_NAME, USER,
                 context=CONTEXT) as transaction:
+            company, = self.company.search([('rec_name', '=', 'B2CK')])
             self.payment_type.create([{
-                        'name': 'Bank Transfer',
-                        }])
+                'name': 'Payment Payable',
+                'kind': 'payable',
+                'company': company.id,
+                }])
+            self.payment_type.create([{
+                'name': 'Payment Receivable',
+                'kind': 'receivable',
+                'company': company.id,
+                }])
             transaction.cursor.commit()
 
     def test0040move_lines(self):
@@ -147,63 +155,28 @@ class AccountPaymentTypeTestCase(unittest.TestCase):
             receivable, = self.account.search([
                     ('kind', '=', 'receivable'),
                     ])
-            expense, = self.account.search([
-                    ('kind', '=', 'expense'),
-                    ])
             payable, = self.account.search([
                     ('kind', '=', 'payable'),
                     ])
-            payment_type, = self.payment_type.search([])
+            payment_receivable, = self.payment_type.search([('kind', '=', 'receivable')])
+            payment_payable, = self.payment_type.search([('kind', '=', 'payable')])
             move, = self.move.create([{
-                        'period': period.id,
-                        'journal': journal_revenue.id,
-                        'date': period.start_date,
-                        }])
+                    'period': period.id,
+                    'journal': journal_revenue.id,
+                    'date': period.start_date,
+                    }])
             self.move_line.create([{
-                            'move': move.id,
-                            'account': revenue.id,
-                            'debit': Decimal(30),
-                            }])
+                    'move': move.id,
+                    'account': revenue.id,
+                    'debit': Decimal(30),
+                    }])
             self.assertRaises(Exception, self.move_line.create, [{
-                                'move': move.id,
-                                'account': revenue.id,
-                                'debit': Decimal(30),
-                                'payment_type': payment_type,
-                                }])
-            self.move_line.create([{
-                            'move': move.id,
-                            'account': receivable.id,
-                            'credit': Decimal(30),
-                            }])
-            self.move_line.create([{
-                            'move': move.id,
-                            'account': receivable.id,
-                            'credit': Decimal(30),
-                            'payment_type': payment_type,
-                            }])
-            self.move_line.create([{
-                            'move': move.id,
-                            'account': expense.id,
-                            'credit': Decimal(30),
-                            }])
-            self.assertRaises(Exception, self.move_line.create, [{
-                                'move': move.id,
-                                'account': expense.id,
-                                'credit': Decimal(30),
-                                'payment_type': payment_type,
-                                }])
-            self.move_line.create([{
-                            'move': move.id,
-                            'account': payable.id,
-                            'debit': Decimal(30),
-                            }])
-            self.move_line.create([{
-                            'move': move.id,
-                            'account': payable.id,
-                            'debit': Decimal(30),
-                            'payment_type': payment_type,
-                            }])
-
+                    'move': move.id,
+                    'account': revenue.id,
+                    'debit': Decimal(30),
+                    'payment_type': payment_receivable,
+                    }])
+            # TODO Create move line payment + payment type payable
 
 def suite():
     suite = trytond.tests.test_tryton.suite()
