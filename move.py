@@ -16,7 +16,7 @@ class Line:
             ('payable', 'Payable'),
             ('receivable', 'Receivable')
             ], 'Kind'),
-        'get_account_kind')
+        'get_account_kind', searcher='search_move_field')
     payment_type = fields.Many2One('account.payment.type',
         'Payment Type', domain=[
             ('kind', '=', Eval('account_kind')),
@@ -52,6 +52,10 @@ class Line:
         if self.account.kind in ('payable', 'receivable'):
             return self.account.kind
         return 'none'
+
+    @classmethod
+    def search_move_field(cls, name, clause):
+        return [('account.kind',) + tuple(clause[1:])]
 
     def on_change_account(self):
         changes = super(Line, self).on_change_account()
