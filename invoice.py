@@ -23,7 +23,6 @@ class Invoice:
             'readonly': Not(Bool(Eval('state').in_(['draft', 'validated']))),
             }, depends=['state', 'type'])
 
-
     def __get_payment_type(self):
         '''
         Return default account payment type
