@@ -15,7 +15,7 @@ class Invoice:
     __name__ = 'account.invoice'
     payment_type = fields.Many2One('account.payment.type', 'Payment Type',
         domain=[
-            If(Eval('type').in_(['out_invoice', 'out_credit_note']),
+            If(Eval('type').in_(['out_invoice', 'in_credit_note']),
             ('kind', '=', 'receivable'),
             ('kind', '=', 'payable')),
             ],
