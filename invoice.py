@@ -2,8 +2,8 @@
 # The COPYRIGHT file at the top level of this repository contains
 # the full copyright notices and license terms.
 
-from trytond.model import fields
-from trytond.pool import PoolMeta
+from trytond.model import Workflow, ModelView, fields
+from trytond.pool import Pool, PoolMeta
 from trytond.pyson import Bool, Eval, If, Not
 
 __all__ = ['Invoice']
@@ -56,3 +56,16 @@ class Invoice:
         if self.payment_type:
             res['payment_type'] = self.payment_type
         return res
+
+    @classmethod
+    @ModelView.button
+    @Workflow.transition('posted')
+    def post(cls, invoices):
+        Line = Pool().get('account.move.line')
+        for invoice in invoices:
+            if invoice.move:
+                for line in invoice.move.lines:
+                    if line.account_kind == invoice.payment_type.kind:
+                        vals = {'payment_type': invoice.payment_type}
+                        Line.write([line], vals)
+        super(Invoice, cls).post(invoices)

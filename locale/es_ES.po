@@ -43,8 +43,8 @@ msgid "ID"
 msgstr "ID"
 
 msgctxt "field:account.payment.type,kind:"
-msgid "Kind of payment type."
-msgstr "Clase de tipo de orden de pago."
+msgid "Kind"
+msgstr "Clase"
 
 msgctxt "field:account.payment.type,name:"
 msgid "Name"
@@ -113,6 +113,10 @@ msgstr "Tipo de pago del cliente"
 msgctxt "field:party.party,supplier_payment_type:"
 msgid "Supplier Payment type"
 msgstr "Tipo de pago de proveedor"
+
+msgctxt "help:account.payment.type,kind:"
+msgid "Kind of payment type."
+msgstr "Clase de tipo de pago."
 
 msgctxt "help:account.payment.type,note:"
 msgid "Description of the payment type that will be shown in descriptions"

@@ -12,7 +12,7 @@ msgstr "Tipus de pagament"
 
 msgctxt "field:account.move.line,account_kind:"
 msgid "Kind"
-msgstr "Tipus"
+msgstr "Classe"
 
 msgctxt "field:account.move.line,payment_type:"
 msgid "Payment Type"
@@ -43,8 +43,8 @@ msgid "ID"
 msgstr "ID"
 
 msgctxt "field:account.payment.type,kind:"
-msgid "Kind of payment type."
-msgstr "Clase de tipus d'ordre de pagament."
+msgid "Kind of payment type"
+msgstr "Classe de tipus de pagament"
 
 msgctxt "field:account.payment.type,name:"
 msgid "Name"
@@ -80,7 +80,7 @@ msgstr "Crear usuari"
 
 msgctxt "field:party.account.payment.type,customer_payment_type:"
 msgid "Customer Payment type"
-msgstr "Tipus d'ordre de pagament de client"
+msgstr "Tipus de pagament de client"
 
 msgctxt "field:party.account.payment.type,id:"
 msgid "ID"
@@ -108,11 +108,16 @@ msgstr "Usuari modificació"
 
 msgctxt "field:party.party,customer_payment_type:"
 msgid "Customer Payment type"
-msgstr "Tipus d'ordre de pagament de client"
+msgstr "Tipus de pagament de client"
 
 msgctxt "field:party.party,supplier_payment_type:"
 msgid "Supplier Payment type"
-msgstr "Tipus d'ordre de pagament de proveïdor"
+msgstr "Tipus de pagament de proveïdor"
+
+#, fuzzy
+msgctxt "help:account.payment.type,kind:"
+msgid "The kind of payment type."
+msgstr "La classe de tipus de pagament."
 
 msgctxt "help:account.payment.type,note:"
 msgid "Description of the payment type that will be shown in descriptions"

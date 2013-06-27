@@ -27,7 +27,7 @@ class PaymentType(ModelSQL, ModelView):
     kind = fields.Selection([
         ('payable', 'Payable'),
         ('receivable', 'Receivable'),
-        ], 'Kind of payment type.', required=True)
+        ], 'Kind of payment type', help='The kind of payment type.', required=True)
 
     @staticmethod
     def default_active():
