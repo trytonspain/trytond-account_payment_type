@@ -63,7 +63,7 @@ class Invoice:
     def post(cls, invoices):
         Line = Pool().get('account.move.line')
         for invoice in invoices:
-            if invoice.move:
+            if invoice.move and invoice.payment_type:
                 for line in invoice.move.lines:
                     if line.account_kind == invoice.payment_type.kind:
                         vals = {'payment_type': invoice.payment_type}
