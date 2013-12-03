@@ -5,7 +5,7 @@
 Tipos de pago
 -------------
 
-A la factura puede seleccionar el tipo de pago de esta. Por defecto, cuando selecciona
-un tercero se autocompleta el tipo de pago según el tipo del pago del tercero. Si lo desea,
-este tipo de pago después lo puede cambiar por otro tipo de pago que no sea el pago
-por defecto del tercero.
+Los tipos de pago le permiten a una factura especificar el sistema de pago que
+debe usar el cliente para pagar. Por defecto, cuando selecciona un tercero se autocompleta
+el tipo de pago según el tipo del pago del tercero. Si lo desea, este tipo de pago después
+lo puede cambiar por otro tipo de pago que no sea el pago por defecto del tercero.
