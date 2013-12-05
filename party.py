@@ -55,7 +55,8 @@ class Party:
         for payment_type_fields in party_account_payment_type:
             party_id = payment_type_fields.party.id
             for fname in set(names):
-                res[fname][party_id] = getattr(payment_type_fields, fname)
+                value = getattr(payment_type_fields, fname)
+                res[fname][party_id] = value and value.id
         return res
 
     @classmethod
