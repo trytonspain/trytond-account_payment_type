@@ -19,7 +19,7 @@ class Line:
         'get_account_kind', searcher='search_account_kind')
     payment_type = fields.Many2One('account.payment.type',
         'Payment Type', domain=[
-            ('kind', '=', Eval('account_kind')),
+            # TODO: ('kind', '=', Eval('account_kind')),
             ], depends=['account_kind'],
         states={
                 'readonly': Bool(Eval('reconciliation')),
