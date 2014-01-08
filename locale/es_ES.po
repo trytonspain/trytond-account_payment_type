@@ -4,7 +4,7 @@ msgstr "Content-Type: text/plain; charset=utf-8\n"
 
 msgctxt "error:account.move.line:"
 msgid "Can not set Payment Type in move line \"%s\" because account is not Payable nor Receivable."
-msgstr "No se puede establecer el tipo de orden de pago del apunte \"%S\" porque la cuenta no es a pagar ni a cobrar."
+msgstr "No se puede establecer el tipo de orden de pago del apunte \"%s\" porque la cuenta no es a pagar ni a cobrar."
 
 msgctxt "field:account.invoice,payment_type:"
 msgid "Payment Type"
