@@ -4,6 +4,7 @@
 from trytond.model import fields
 from trytond.pool import PoolMeta
 from trytond.pyson import Eval, Bool
+from trytond.transaction import Transaction
 
 __all__ = ['Line']
 __metaclass__ = PoolMeta
@@ -13,16 +14,19 @@ class Line:
     __name__ = 'account.move.line'
 
     account_kind = fields.Function(fields.Selection([
+            ('', ''),
             ('payable', 'Payable'),
             ('receivable', 'Receivable')
-            ], 'Kind'),
-        'get_account_kind', searcher='search_account_kind')
+            ], 'Kind', on_change_with=['account', 'credit', 'debit']),
+        'on_change_with_account_kind', searcher='search_account_kind')
     payment_type = fields.Many2One('account.payment.type',
         'Payment Type', domain=[
-            # TODO: ('kind', '=', Eval('account_kind')),
-            ], depends=['account_kind'],
+            ('kind', '=', Eval('account_kind')),
+            ], depends=['account_kind', 'reconciliation'],
         states={
                 'readonly': Bool(Eval('reconciliation')),
+                'invisible': ~Eval('account_kind', '').in_(
+                    ['payable', 'receivable']),
             })
 
     @classmethod
@@ -42,16 +46,28 @@ class Line:
         for line in lines:
             line.check_account_payment_type()
 
+    @classmethod
+    def copy(cls, lines, default=None):
+        if default is None:
+            default = {}
+        if (Transaction().context.get('cancel_move') and not 'payment_type' in
+                default):
+            default['payment_type'] = None
+        return super(Line, cls).copy(lines, default)
+
     def check_account_payment_type(self):
         if (self.payment_type
                 and self.account.kind not in ('payable', 'receivable')):
             self.raise_user_error('invalid_account_payment_type',
                 (self.rec_name,))
 
-    def get_account_kind(self, name):
-        if self.account.kind in ('payable', 'receivable'):
-            return self.account.kind
-        return 'none'
+    def on_change_with_account_kind(self, name=None):
+        if self.account and self.account.kind in ('payable', 'receivable'):
+            if self.credit > 0 or self.debit < 0:
+                return 'payable'
+            elif self.debit > 0 or self.credit < 0:
+                return 'receivable'
+        return ''
 
     @classmethod
     def search_account_kind(cls, name, clause):
@@ -62,6 +78,6 @@ class Line:
         if self.account and self.account.kind in ('payable', 'receivable'):
             changes['account_kind'] = self.account.kind
         else:
-            changes['account_kind'] = None
+            changes['account_kind'] = ''
         changes['payment_type'] = False
         return changes

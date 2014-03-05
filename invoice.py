@@ -5,6 +5,7 @@
 from trytond.model import Workflow, ModelView, fields
 from trytond.pool import Pool, PoolMeta
 from trytond.pyson import Bool, Eval, If, Not
+from trytond.transaction import Transaction
 
 __all__ = ['Invoice']
 __metaclass__ = PoolMeta
@@ -56,6 +57,10 @@ class Invoice:
         if self.payment_type:
             res['payment_type'] = self.payment_type
         return res
+
+    def get_cancel_move(self):
+        with Transaction().set_context(cancel_move=True):
+            return super(Invoice, self).get_cancel_move()
 
     @classmethod
     @ModelView.button
