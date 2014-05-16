@@ -22,9 +22,7 @@ from trytond.tests.test_tryton import POOL, DB_NAME, USER, CONTEXT
 
 
 class AccountPaymentTypeTestCase(unittest.TestCase):
-    '''
-    Test AccountPaymentType module.
-    '''
+    'Test AccountPaymentType module'
 
     def setUp(self):
         trytond.tests.test_tryton.install_module('account_payment_type')
@@ -46,61 +44,30 @@ class AccountPaymentTypeTestCase(unittest.TestCase):
         self.account_type = POOL.get('account.account.type')
 
     def test0005views(self):
-        '''
-        Test views.
-        '''
+        'Test views'
         test_view('account_payment_type')
 
     def test0006depends(self):
-        '''
-        Test depends.
-        '''
+        'Test depends'
         test_depends()
 
-    def test0020fiscalyear(self):
-        '''
-        Test fiscalyear.
-        '''
+    def test0010move_lines(self):
+        'Test account debit/credit'
         with Transaction().start(DB_NAME, USER,
-                context=CONTEXT) as transaction:
-            today = datetime.date.today()
+                context=CONTEXT):
             company, = self.company.search([('rec_name', '=', 'B2CK')])
+            fiscalyear, = self.fiscalyear.search([])
+            today = datetime.date.today()
             invoice_sequence, = self.sequence_strict.create([{
                         'name': '%s' % today.year,
                         'code': 'account.invoice',
                         'company': company.id,
                         }])
-            fiscalyear, = self.fiscalyear.search([])
             fiscalyear.out_invoice_sequence = invoice_sequence
             fiscalyear.in_invoice_sequence = invoice_sequence
             fiscalyear.out_credit_note_sequence = invoice_sequence
             fiscalyear.in_credit_note_sequence = invoice_sequence
             fiscalyear.save()
-            transaction.cursor.commit()
-
-    def test0030payment_type(self):
-        with Transaction().start(DB_NAME, USER,
-                context=CONTEXT) as transaction:
-            company, = self.company.search([('rec_name', '=', 'B2CK')])
-            self.payment_type.create([{
-                'name': 'Payment Payable',
-                'kind': 'payable',
-                'company': company.id,
-                }])
-            self.payment_type.create([{
-                'name': 'Payment Receivable',
-                'kind': 'receivable',
-                'company': company.id,
-                }])
-            transaction.cursor.commit()
-
-    def test0040move_lines(self):
-        '''
-        Test account debit/credit.
-        '''
-        with Transaction().start(DB_NAME, USER,
-                context=CONTEXT):
-            fiscalyear, = self.fiscalyear.search([])
             period = fiscalyear.periods[0]
             journal_revenue, = self.journal.search([
                     ('code', '=', 'REV'),
@@ -114,8 +81,16 @@ class AccountPaymentTypeTestCase(unittest.TestCase):
             payable, = self.account.search([
                     ('kind', '=', 'payable'),
                     ])
-            payment_receivable, = self.payment_type.search([('kind', '=', 'receivable')])
-            payment_payable, = self.payment_type.search([('kind', '=', 'payable')])
+            payment_payable, = self.payment_type.create([{
+                'name': 'Payment Payable',
+                'kind': 'payable',
+                'company': company.id,
+                }])
+            payment_receivable, = self.payment_type.create([{
+                'name': 'Payment Receivable',
+                'kind': 'receivable',
+                'company': company.id,
+                }])
             move, = self.move.create([{
                     'period': period.id,
                     'journal': journal_revenue.id,
@@ -134,12 +109,9 @@ class AccountPaymentTypeTestCase(unittest.TestCase):
                     }])
             # TODO Create move line payment + payment type payable
 
+
 def suite():
     suite = trytond.tests.test_tryton.suite()
-    from trytond.modules.company.tests import test_company
-    for test in test_company.suite():
-        if test not in suite:
-            suite.addTest(test)
     from trytond.modules.account.tests import test_account
     for test in test_account.suite():
         if test not in suite and not isinstance(test, doctest.DocTestCase):
