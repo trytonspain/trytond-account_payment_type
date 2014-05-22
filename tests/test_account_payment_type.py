@@ -55,7 +55,7 @@ class AccountPaymentTypeTestCase(unittest.TestCase):
         'Test account debit/credit'
         with Transaction().start(DB_NAME, USER,
                 context=CONTEXT):
-            company, = self.company.search([('rec_name', '=', 'B2CK')])
+            company, = self.company.search([('rec_name', '=', 'Dunder Mifflin')])
             fiscalyear, = self.fiscalyear.search([])
             today = datetime.date.today()
             invoice_sequence, = self.sequence_strict.create([{
