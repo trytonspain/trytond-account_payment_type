@@ -17,7 +17,7 @@ class Line:
             ('', ''),
             ('payable', 'Payable'),
             ('receivable', 'Receivable')
-            ], 'Kind', on_change_with=['account', 'credit', 'debit']),
+            ], 'Kind'),
         'on_change_with_account_kind', searcher='search_account_kind')
     payment_type = fields.Many2One('account.payment.type',
         'Payment Type', domain=[
@@ -61,6 +61,7 @@ class Line:
             self.raise_user_error('invalid_account_payment_type',
                 (self.rec_name,))
 
+    @fields.depends('account', 'credit', 'debit')
     def on_change_with_account_kind(self, name=None):
         if self.account and self.account.kind in ('payable', 'receivable'):
             if self.credit > 0 or self.debit < 0:
