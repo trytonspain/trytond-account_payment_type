@@ -12,7 +12,6 @@ __metaclass__ = PoolMeta
 
 
 class Invoice:
-    'Invoice'
     __name__ = 'account.invoice'
     payment_type = fields.Many2One('account.payment.type', 'Payment Type',
         domain=[
