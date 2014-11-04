@@ -33,7 +33,7 @@ class Line:
     def __setup__(cls):
         super(Line, cls).__setup__()
         if hasattr(cls, '_check_modify_exclude'):
-            cls._check_modify_exclude.append('payment_type')
+            cls._check_modify_exclude.add('payment_type')
         cls._error_messages.update({
                 'invalid_account_payment_type': ('Can not set Payment Type in '
                     'move line "%s" because account is not Payable nor '
@@ -80,5 +80,4 @@ class Line:
             changes['account_kind'] = self.account.kind
         else:
             changes['account_kind'] = ''
-        changes['payment_type'] = False
         return changes
