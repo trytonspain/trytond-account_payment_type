@@ -68,6 +68,7 @@ class Line:
                 return 'payable'
             elif self.debit > 0 or self.credit < 0:
                 return 'receivable'
+            return self.account.kind
         return ''
 
     @classmethod
