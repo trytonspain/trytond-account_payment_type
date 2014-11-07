@@ -1,3 +1,6 @@
+* Return account_kind if account is payable/receivable despite of the move line
+  amounts are 0
+
 * Validate that domain dependant fields are not modified if related models exist
 
 Version 3.2.0 - 2014-05-22
