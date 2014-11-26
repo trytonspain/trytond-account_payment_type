@@ -21,8 +21,6 @@ class Invoice:
             ],
         states={
             'readonly': Not(Bool(Eval('state').in_(['draft', 'validated']))),
-            'required': (Eval('type').in_(['out_invoice', 'out_credit_note'])
-                & ~Eval('state').in_(['draft', 'cancel'])),
             }, depends=['state', 'type'])
 
     def __get_payment_type(self):
