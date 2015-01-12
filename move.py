@@ -6,8 +6,16 @@ from trytond.pool import PoolMeta
 from trytond.pyson import Eval, Bool
 from trytond.transaction import Transaction
 
-__all__ = ['Line']
+__all__ = ['Move', 'Line']
 __metaclass__ = PoolMeta
+
+
+class Move:
+    __name__ = 'account.move'
+
+    def cancel(self):
+        with Transaction().set_context(cancel_move=True):
+            return super(Move, self).cancel()
 
 
 class Line:

@@ -15,5 +15,6 @@ def register():
         PartyAccountPaymentType,
         Party,
         Invoice,
+        Move,
         Line,
         module='account_payment_type', type_='model')

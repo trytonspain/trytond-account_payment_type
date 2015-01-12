@@ -57,10 +57,6 @@ class Invoice:
             res['payment_type'] = self.payment_type
         return res
 
-    def get_cancel_move(self):
-        with Transaction().set_context(cancel_move=True):
-            return super(Invoice, self).get_cancel_move()
-
     @classmethod
     @ModelView.button
     @Workflow.transition('posted')
