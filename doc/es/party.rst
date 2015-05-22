@@ -8,9 +8,8 @@
 .. |supplier_payment_type| field:: party.party/supplier_payment_type
 
 
-#:inside:party/party:section:crear-un-tercero#
+#:inside:party/party:bullet_list:campos_contabilidad#
 
-
-El |customer_payment_type| y el |supplier_payment_type| determinan el
-Tipo de pago que se utilizará por defecto en las facturas de Cliente y
-Proveedor de ese tercero.
+* |customer_payment_type| y el |supplier_payment_type|: determinan el tipo de
+  pago que se utilizará por defecto en las facturas de Cliente y Proveedor de
+  ese tercero.

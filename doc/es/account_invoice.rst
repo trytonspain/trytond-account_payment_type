@@ -1,4 +1,4 @@
-#:after:account/account_invoice:section:plazos_de_pago#
+#:before:account_invoice/account_invoice:section:cancelar#
 
 .. inheritref:: account_payment_type/account_invoice:section:payment_type
 
