@@ -55,17 +55,3 @@ class Invoice:
         if self.payment_type:
             res['payment_type'] = self.payment_type
         return res
-
-    @classmethod
-    @ModelView.button
-    @Workflow.transition('posted')
-    def post(cls, invoices):
-        Line = Pool().get('account.move.line')
-        for invoice in invoices:
-            if invoice.move and invoice.payment_type:
-                for line in invoice.move.lines:
-                    if (line.account_kind == invoice.payment_type.kind and
-                            not line.payment_type):
-                        vals = {'payment_type': invoice.payment_type}
-                        Line.write([line], vals)
-        super(Invoice, cls).post(invoices)
