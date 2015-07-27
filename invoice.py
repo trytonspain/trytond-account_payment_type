@@ -43,13 +43,14 @@ class Invoice:
                 res['payment_type'] = party.supplier_payment_type.id
         else:
             res['payment_type'] = None
-        if company and type in ('out_credit_note', 'in_credit_note'):
+        if (company and not res.get('payment_type') and
+                type in ('out_credit_note', 'in_credit_note')):
             if type == 'out_credit_note' \
-                    and company.customer_payment_type:
-                res['payment_type'] = company.customer_payment_type.id
+                    and company.party.supplier_payment_type:
+                res['payment_type'] = company.party.supplier_payment_type.id
             elif type == 'in_credit_note' \
-                    and company.supplier_payment_type:
-                res['payment_type'] = company.supplier_payment_type.id
+                    and company.party.customer_payment_type:
+                res['payment_type'] = company.party.customer_payment_type.id
         return res
 
     def on_change_party(self):
