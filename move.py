@@ -83,10 +83,8 @@ class Line:
     def search_account_kind(cls, name, clause):
         return [('account.kind',) + tuple(clause[1:])]
 
+    @fields.depends('account')
     def on_change_account(self):
-        changes = super(Line, self).on_change_account()
+        super(Line, self).on_change_account()
         if self.account and self.account.kind in ('payable', 'receivable'):
-            changes['account_kind'] = self.account.kind
-        else:
-            changes['account_kind'] = ''
-        return changes
+            self.account_kind = self.account.kind
