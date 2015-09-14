@@ -164,7 +164,7 @@ msgstr "Tipus d'ordre de pagament de tercer"
 
 msgctxt "selection:account.move.line,account_kind:"
 msgid ""
-msgstr " "
+msgstr ""
 
 msgctxt "selection:account.move.line,account_kind:"
 msgid "Payable"
