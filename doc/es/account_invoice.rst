@@ -12,7 +12,7 @@ Cuando se crea una factura y selecciona el tercero, se autocompleta el tipo de p
 el tipo del pago del tercero. Si lo desea en la factura, el tipo de pago lo puede cambiar por
 otro tipo de pago que no sea el pago por defecto del tercero.
 
-A |menu_account_payment_type_form| podrá añadir los tipos de pago y especificar si son de cobro o de pago.
+En |menu_account_payment_type_form| podrá añadir los tipos de pago y especificar si son de cobro o de pago.
 Se recomienda en los tipos de pago "manuales" añadir detalles en la descripción (por ejemplo, un pago
 del tipo Transferencia bancaria, añadir en la descripción la cuenta corriente para hacer el pago).
 
