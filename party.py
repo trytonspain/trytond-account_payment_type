@@ -30,13 +30,13 @@ class Party:
                 ('kind', '=', 'receivable'),
                 ],
             help='Payment type of the customer.'),
-        'get_payment_type', setter='set_payment_type')
+        'get_payment_type', setter='set_payment_type', searcher='search_payment_type')
     supplier_payment_type = fields.Function(fields.Many2One(
         'account.payment.type', string='Supplier Payment type', domain=[
                 ('kind', '=', 'payable'),
                 ],
             help='Payment type of the supplier.'),
-        'get_payment_type', setter='set_payment_type')
+        'get_payment_type', setter='set_payment_type', searcher='search_payment_type')
 
     @classmethod
     def get_payment_type(cls, parties, names):
@@ -81,3 +81,14 @@ class Party:
                     })
         if vlist:
             PartyAccountPaymentType.create(vlist)
+
+    @classmethod
+    def search_payment_type(cls, name, clause):
+        PartyAccountPaymentType = Pool().get('party.account.payment.type')
+        company = Transaction().context.get('company')
+
+        party_payment_types = PartyAccountPaymentType.search([
+                ('company', '=', company),
+                tuple(clause),
+                ])
+        return [('id', 'in', [papt.party.id for papt in party_payment_types])]
