@@ -77,11 +77,6 @@ class Invoice:
                     Transaction().context.get('company')))
             changes.update(cls().__get_payment_type(party=party,
                     company=company, type=values.get('type')))
-            # Compatibility with account_bank module
-            if hasattr(cls, 'compute_default_bank_account'):
-                new_values = values.copy()
-                new_values.update(changes)
-                changes.update(cls.compute_default_bank_account(new_values))
         return changes
 
     @classmethod
