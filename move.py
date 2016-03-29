@@ -7,10 +7,10 @@ from trytond.pyson import Eval, Bool
 from trytond.transaction import Transaction
 
 __all__ = ['Move', 'Line']
-__metaclass__ = PoolMeta
 
 
 class Move:
+    __metaclass__ = PoolMeta
     __name__ = 'account.move'
 
     def cancel(self):
@@ -19,6 +19,7 @@ class Move:
 
 
 class Line:
+    __metaclass__ = PoolMeta
     __name__ = 'account.move.line'
 
     account_kind = fields.Function(fields.Selection([

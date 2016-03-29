@@ -6,7 +6,6 @@ from trytond.pool import PoolMeta, Pool
 from trytond.transaction import Transaction
 
 __all__ = ['PartyAccountPaymentType', 'Party']
-__metaclass__ = PoolMeta
 
 
 class PartyAccountPaymentType(ModelSQL, ModelView):
@@ -23,6 +22,7 @@ class PartyAccountPaymentType(ModelSQL, ModelView):
 
 
 class Party:
+    __metaclass__ = PoolMeta
     __name__ = 'party.party'
 
     customer_payment_type = fields.Function(fields.Many2One(

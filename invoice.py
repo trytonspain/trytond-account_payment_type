@@ -8,10 +8,10 @@ from trytond.pyson import Bool, Eval, If, Not
 from trytond.transaction import Transaction
 
 __all__ = ['Invoice']
-__metaclass__ = PoolMeta
 
 
 class Invoice:
+    __metaclass__ = PoolMeta
     __name__ = 'account.invoice'
     payment_type = fields.Many2One('account.payment.type', 'Payment Type',
         domain=[
