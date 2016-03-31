@@ -5,6 +5,7 @@
     position="after">
         <label name="payment_type"/>
         <field name="payment_type"/>
+        <field name="payment_type_kind"/>
     </xpath>
 </data>
 
