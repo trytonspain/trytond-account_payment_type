@@ -13,9 +13,9 @@ class Move:
     __metaclass__ = PoolMeta
     __name__ = 'account.move'
 
-    def cancel(self):
+    def cancel(self, default=None):
         with Transaction().set_context(cancel_move=True):
-            return super(Move, self).cancel()
+            return super(Move, self).cancel(default=default)
 
 
 class Line:
