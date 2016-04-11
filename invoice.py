@@ -29,7 +29,7 @@ class Invoice:
         states={
             'readonly': Not(Bool(Eval('state').in_(['draft', 'validated']))),
             },
-        )
+        depends=['payment_type_kind', 'state'])
 
     @fields.depends('type', 'total_amount', 'lines')
     def on_change_with_payment_type_kind(self, name=None):
@@ -82,7 +82,7 @@ class Invoice:
                     return self.company.party.customer_payment_type.id
 
     def _get_move_line(self, date, amount):
-        res = super(Invoice, self)._get_move_line(date, amount)
+        line = super(Invoice, self)._get_move_line(date, amount)
         if self.payment_type:
-            res['payment_type'] = self.payment_type
-        return res
+            line.payment_type = self.payment_type
+        return line
