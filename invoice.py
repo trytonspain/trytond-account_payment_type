@@ -31,57 +31,57 @@ class Invoice:
             },
         depends=['payment_type_kind', 'state'])
 
-    @fields.depends('type', 'total_amount', 'lines')
+    @fields.depends('type', 'untaxed_amount', 'lines')
     def on_change_with_payment_type_kind(self, name=None):
-        if self.total_amount:
+        if self.untaxed_amount:
             if self.type == 'out':
-                if self.total_amount >= ZERO:
+                if self.untaxed_amount >= ZERO:
                     return 'receivable'
                 else:
                     return 'payable'
             elif self.type == 'in':
-                if self.total_amount >= ZERO:
+                if self.untaxed_amount >= ZERO:
                     return 'payable'
                 else:
                     return 'receivable'
 
-    @fields.depends('party', 'company', 'type', 'total_amount', 'lines',
+    @fields.depends('party', 'company', 'type', 'untaxed_amount', 'lines',
         'payment_type', methods=['payment_type_kind'])
     def on_change_with_payment_type(self, name=None):
-        if (self.payment_type
-                and self.payment_type.kind == self.payment_type_kind):
+        kind = self.on_change_with_payment_type_kind()
+        if (self.payment_type and self.payment_type.kind == kind):
             return self.payment_type.id
-        if not self.total_amount:
+        if not self.untaxed_amount:
             return None
         if self.party:
             if self.type == 'out':
-                if (self.total_amount >= ZERO
+                if (self.untaxed_amount >= ZERO
                         and self.party.customer_payment_type):
                     return self.party.customer_payment_type.id
-                elif (self.total_amount < ZERO
+                elif (self.untaxed_amount < ZERO
                         and self.party.supplier_payment_type):
                     return self.party.supplier_payment_type.id
             elif self.type == 'in':
-                if (self.total_amount >= ZERO
+                if (self.untaxed_amount >= ZERO
                         and self.party.supplier_payment_type):
                     return self.party.supplier_payment_type.id
-                elif (self.total_amount < ZERO
+                elif (self.untaxed_amount < ZERO
                         and self.party.customer_payment_type):
                     return self.party.customer_payment_type.id
 
         if self.company:
             if self.type == 'out':
-                if (self.total_amount >= ZERO
+                if (self.untaxed_amount >= ZERO
                         and self.company.party.customer_payment_type):
                     return self.company.party.customer_payment_type.id
-                elif (self.total_amount < ZERO
+                elif (self.untaxed_amount < ZERO
                         and self.company.party.supplier_payment_type):
                     return self.company.party.supplier_payment_type.id
             elif self.type == 'in':
-                if (self.total_amount >= ZERO
+                if (self.untaxed_amount >= ZERO
                         and self.company.party.supplier_payment_type):
                     return self.company.party.supplier_payment_type.id
-                elif (self.total_amount < ZERO
+                elif (self.untaxed_amount < ZERO
                         and self.company.party.customer_payment_type):
                     return self.company.party.customer_payment_type.id
         return None
