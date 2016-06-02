@@ -45,10 +45,14 @@ class Invoice:
                 else:
                     return 'receivable'
 
-    @fields.depends('party', 'company', 'type', 'total_amount', 'lines')
+    @fields.depends('party', 'company', 'type', 'total_amount', 'lines',
+        'payment_type', methods=['payment_type_kind'])
     def on_change_with_payment_type(self, name=None):
+        if (self.payment_type
+                and self.payment_type.kind == self.payment_type_kind):
+            return self.payment_type.id
         if not self.total_amount:
-            return
+            return None
         if self.party:
             if self.type == 'out':
                 if (self.total_amount >= ZERO
@@ -80,6 +84,7 @@ class Invoice:
                 elif (self.total_amount < ZERO
                         and self.company.party.customer_payment_type):
                     return self.company.party.customer_payment_type.id
+        return None
 
     def _get_move_line(self, date, amount):
         res = super(Invoice, self)._get_move_line(date, amount)
