@@ -2,11 +2,14 @@
 # The COPYRIGHT file at the top level of this repository contains the full
 # copyright notices and license terms.
 from decimal import Decimal
+import doctest
 import unittest
 
 import trytond.tests.test_tryton
 from trytond.pool import Pool
 from trytond.tests.test_tryton import ModuleTestCase, with_transaction
+from trytond.tests.test_tryton import doctest_setup, doctest_teardown
+from trytond.tests.test_tryton import doctest_checker
 
 from trytond.modules.company.tests import create_company, set_company
 from trytond.modules.account.tests import create_chart, get_fiscalyear
@@ -18,8 +21,8 @@ class AccountPaymentTypeTestCase(ModuleTestCase):
     module = 'account_payment_type'
 
     @with_transaction()
-    def test0010move_lines(self):
-        'Test account debit/credit'
+    def test_move_lines(self):
+        'Test move lines'
         pool = Pool()
         Account = pool.get('account.account')
         FiscalYear = pool.get('account.fiscalyear')
@@ -82,4 +85,8 @@ def suite():
     suite = trytond.tests.test_tryton.suite()
     suite.addTests(unittest.TestLoader().loadTestsFromTestCase(
         AccountPaymentTypeTestCase))
+    suite.addTests(doctest.DocFileSuite('scenario_account_payment_type.rst',
+            setUp=doctest_setup, tearDown=doctest_teardown, encoding='utf-8',
+            checker=doctest_checker,
+            optionflags=doctest.REPORT_ONLY_FIRST_FAILURE))
     return suite
