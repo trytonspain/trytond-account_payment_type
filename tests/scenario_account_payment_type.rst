@@ -135,11 +135,12 @@ When its a return its ussed the supplier payment_kind::
     >>> invoice.payment_type == payable
     True
 
-And where clearing all the lines the payment_type is also cleared::
+And where clearing all the lines the recevaible payment type is used::
 
     >>> _ = invoice.lines.pop()
     >>> _ = invoice.lines.pop()
     >>> _ = invoice.lines.pop()
-    >>> invoice.payment_type
+    >>> invoice.payment_type == receivable
+    True
     >>> invoice.untaxed_amount
     Decimal('0.00')
