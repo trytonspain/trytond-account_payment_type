@@ -44,6 +44,7 @@ class Invoice:
                     return 'payable'
                 else:
                     return 'receivable'
+        return 'receivable' if self.type == 'out' else 'payable'
 
     @fields.depends('party', 'company', 'type', 'untaxed_amount', 'lines',
         'payment_type', methods=['payment_type_kind'])
