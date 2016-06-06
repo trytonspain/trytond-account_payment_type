@@ -1,4 +1,4 @@
-# 
+#
 msgid ""
 msgstr "Content-Type: text/plain; charset=utf-8\n"
 
@@ -21,6 +21,10 @@ msgstr ""
 msgctxt "field:account.invoice,payment_type:"
 msgid "Payment Type"
 msgstr "Tipo de pago"
+
+msgctxt "field:account.invoice,payment_type_kind:"
+msgid "Kind of payment type"
+msgstr "Clase del tipo de pago"
 
 msgctxt "field:account.move.line,account_kind:"
 msgid "Kind"
@@ -56,7 +60,7 @@ msgstr "ID"
 
 msgctxt "field:account.payment.type,kind:"
 msgid "Kind of payment type"
-msgstr "Clase"
+msgstr "Clase del tipo de pago"
 
 msgctxt "field:account.payment.type,name:"
 msgid "Name"
@@ -162,6 +166,14 @@ msgstr "Tipos de pago"
 msgctxt "model:party.account.payment.type,name:"
 msgid "Party Account Payment Type"
 msgstr "Tipo de orden de pago de tercero"
+
+msgctxt "selection:account.invoice,payment_type_kind:"
+msgid "Payable"
+msgstr "A pagar"
+
+msgctxt "selection:account.invoice,payment_type_kind:"
+msgid "Receivable"
+msgstr "A cobrar"
 
 msgctxt "selection:account.move.line,account_kind:"
 msgid ""
