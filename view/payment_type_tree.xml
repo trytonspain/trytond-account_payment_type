@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<tree string="Payment Type">
+<tree>
     <field name="name"/>
     <field name="code"/>
     <field name="company"/>
