@@ -144,3 +144,16 @@ And where clearing all the lines the recevaible payment type is used::
     True
     >>> invoice.untaxed_amount
     Decimal('0.00')
+
+Test confirming that we can confirm the invoice::
+
+    >>> line = invoice.lines.new()
+    >>> line.product = product
+    >>> line.quantity = 1
+    >>> line.unit_price = Decimal('40.0')
+    >>> invoice.click('post')
+    >>> revenue.reload()
+    >>> revenue.debit
+    Decimal('0.00')
+    >>> revenue.credit
+    Decimal('40.00')

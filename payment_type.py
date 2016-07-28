@@ -35,7 +35,6 @@ class PaymentType(ModelSQL, ModelView):
         super(PaymentType, cls).__setup__()
         cls._check_modify_fields = set(['kind'])
         cls._check_modify_related_models = set([
-                ('account.move.line', 'payment_type'),
                 ('account.invoice', 'payment_type'),
                 ])
         cls._error_messages.update({

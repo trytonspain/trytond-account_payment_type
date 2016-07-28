@@ -86,9 +86,3 @@ class Invoice:
                         and self.company.party.customer_payment_type):
                     return self.company.party.customer_payment_type.id
         return None
-
-    def _get_move_line(self, date, amount):
-        res = super(Invoice, self)._get_move_line(date, amount)
-        if self.payment_type:
-            res['payment_type'] = self.payment_type
-        return res

@@ -5,7 +5,6 @@ from trytond.pool import Pool
 from .payment_type import *
 from .party import *
 from .invoice import *
-from .move import *
 
 
 def register():
@@ -14,6 +13,4 @@ def register():
         PartyAccountPaymentType,
         Party,
         Invoice,
-        Move,
-        Line,
         module='account_payment_type', type_='model')
