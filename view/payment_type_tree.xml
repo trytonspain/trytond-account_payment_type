@@ -3,7 +3,7 @@
     <field name="name"/>
     <field name="code"/>
     <field name="company"/>
-    <field name="active"/>
     <field name="kind"/>
+    <field name="active" tree_invisible="1"/>
 </tree>
 
