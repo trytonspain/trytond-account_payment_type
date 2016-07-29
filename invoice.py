@@ -2,9 +2,11 @@
 # The COPYRIGHT file at the top level of this repository contains
 # the full copyright notices and license terms.
 from decimal import Decimal
+from collections import defaultdict
 from trytond.model import fields
-from trytond.pool import PoolMeta
+from trytond.pool import Pool, PoolMeta
 from trytond.pyson import Bool, Eval, Not
+from trytond.transaction import Transaction
 
 __all__ = ['Invoice']
 ZERO = Decimal('0.0')
@@ -86,3 +88,34 @@ class Invoice:
                         and self.company.party.customer_payment_type):
                     return self.company.party.customer_payment_type.id
         return None
+
+    @classmethod
+    def post(cls, invoices):
+        pool = Pool()
+        Date = pool.get('ir.date')
+        Payment = pool.get('account.payment')
+        PayLine = pool.get('account.move.line.pay', type='wizard')
+        super(Invoice, cls).post(invoices)
+        lines_to_pay = defaultdict(list)
+        for invoice in invoices:
+            if (invoice.payment_type
+                    and invoice.payment_type.payment_journal):
+                for line in invoice.lines_to_pay:
+                    key = (invoice.payment_type, line.maturity_date)
+                    lines_to_pay[key].append(line.id)
+
+        to_approve = []
+        for key, lines in lines_to_pay.iteritems():
+            payment_type, date = key
+            session_id, _, _ = PayLine.create()
+            payline = PayLine(session_id)
+            payline.start.journal = payment_type.payment_journal
+            payline.start.date = date or Date.today()
+            payline.start.approve = True
+            with Transaction().set_context(active_ids=lines):
+                action, data = payline.do_pay(None)
+            if payment_type.approve_payments:
+                to_approve.extend(data['res_id'])
+            PayLine.delete(session_id)
+        if to_approve:
+            Payment.approve(Payment.browse(to_approve))

@@ -13,7 +13,11 @@ copyright notices and license types. -->
     <field name="company"/>
     <label name="kind"/>
     <field name="kind"/>
-    <newline/>
+    <separator id="payment" string="Payments" colspan="4"/>
+    <label name="payment_journal"/>
+    <field name="payment_journal"/>
+    <label name="approve_payments"/>
+    <field name="approve_payments"/>
     <separator name="note" colspan="4"/>
     <field name="note" colspan="4"/>
 </form>

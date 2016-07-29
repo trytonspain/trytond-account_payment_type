@@ -1,3 +1,4 @@
+* Allow payment creation when the invoices are posted
 * Remove payment_type from Account Move Line
 
 Version 4.0.0 - 2016-05-03

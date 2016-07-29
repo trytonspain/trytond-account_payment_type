@@ -157,3 +157,43 @@ Test confirming that we can confirm the invoice::
     Decimal('0.00')
     >>> revenue.credit
     Decimal('40.00')
+
+No payment have been generated::
+
+    >>> Payment = Model.get('account.payment')
+    >>> len(Payment.find([]))
+    0
+
+Create a payment journal for the payment type and mark the payment type to
+create payments::
+
+    >>> PaymentJournal = Model.get('account.payment.journal')
+    >>> payment_journal = PaymentJournal(name='Manual',
+    ...     process_method='manual')
+    >>> payment_journal.save()
+    >>> receivable.payment_journal = payment_journal
+    >>> receivable.approve_payments = True
+    >>> receivable.save()
+
+Create a new invoice and check it has the payment created::
+
+    >>> invoice = Invoice()
+    >>> invoice.party = party
+    >>> invoice.payment_term = payment_term
+    >>> invoice.payment_type
+    >>> line = invoice.lines.new()
+    >>> line.product = product
+    >>> line.quantity = 1
+    >>> line.unit_price = Decimal('50.0')
+    >>> invoice.payment_type == receivable
+    True
+    >>> invoice.click('post')
+    >>> invoice.total_amount
+    Decimal('55.00')
+    >>> payment, = Payment.find([])
+    >>> payment.line.origin == invoice
+    True
+    >>> payment.amount
+    Decimal('55.00')
+    >>> payment.state
+    u'approved'

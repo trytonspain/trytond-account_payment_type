@@ -2,7 +2,7 @@
 # The COPYRIGHT file at the top level of this repository contains
 # the full copyright notices and license terms.
 from trytond.model import ModelView, ModelSQL, fields
-from trytond.pyson import Eval, If
+from trytond.pyson import Eval, If, Bool
 from trytond.pool import Pool
 from trytond.transaction import Transaction
 
@@ -29,6 +29,16 @@ class PaymentType(ModelSQL, ModelView):
             ('receivable', 'Receivable'),
             ], 'Kind of payment type', required=True,
         help='The kind of payment type.')
+    payment_journal = fields.Many2One('account.payment.journal',
+        'Payment Journal',
+        help=('The payment journal for creating payments when the invoices '
+            'are posted. A payment for each maturity date will be created.'))
+    approve_payments = fields.Boolean('Aprove Payments?',
+        states={
+            'invisible': ~Bool(Eval('payment_journal', 0)),
+            },
+        depends=['payment_journal'],
+        help='If marked, payments will be approved after creation')
 
     @classmethod
     def __setup__(cls):
@@ -56,6 +66,11 @@ class PaymentType(ModelSQL, ModelView):
             return '[' + self.code + '] ' + self.name
         else:
             return self.name
+
+    @fields.depends('payment_journal', 'approve_payments')
+    def on_change_payment_journal(self):
+        if not self.payment_journal:
+            self.approve_payments = False
 
     @classmethod
     def write(cls, *args):
