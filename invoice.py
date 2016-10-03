@@ -56,37 +56,22 @@ class Invoice:
             return self.payment_type.id
         if not self.untaxed_amount:
             return None
-        if self.party:
+        for party in [self.party, self.company]:
+            if not party:
+                continue
             if self.type == 'out':
-                if (self.untaxed_amount >= ZERO
-                        and self.party.customer_payment_type):
-                    return self.party.customer_payment_type.id
-                elif (self.untaxed_amount < ZERO
-                        and self.party.supplier_payment_type):
-                    return self.party.supplier_payment_type.id
+                if self.untaxed_amount >= ZERO:
+                    name = 'customer_payment_type'
+                else:
+                    name = 'supplier_payment_type'
             elif self.type == 'in':
-                if (self.untaxed_amount >= ZERO
-                        and self.party.supplier_payment_type):
-                    return self.party.supplier_payment_type.id
-                elif (self.untaxed_amount < ZERO
-                        and self.party.customer_payment_type):
-                    return self.party.customer_payment_type.id
-
-        if self.company:
-            if self.type == 'out':
-                if (self.untaxed_amount >= ZERO
-                        and self.company.party.customer_payment_type):
-                    return self.company.party.customer_payment_type.id
-                elif (self.untaxed_amount < ZERO
-                        and self.company.party.supplier_payment_type):
-                    return self.company.party.supplier_payment_type.id
-            elif self.type == 'in':
-                if (self.untaxed_amount >= ZERO
-                        and self.company.party.supplier_payment_type):
-                    return self.company.party.supplier_payment_type.id
-                elif (self.untaxed_amount < ZERO
-                        and self.company.party.customer_payment_type):
-                    return self.company.party.customer_payment_type.id
+                if self.untaxed_amount >= ZERO:
+                    name = 'supplier_payment_type'
+                else:
+                    name = 'customer_payment_type'
+            payment_type = getattr(party, name)
+            if payment_type:
+                return payment_type.id
         return None
 
     @classmethod

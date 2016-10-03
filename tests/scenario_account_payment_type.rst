@@ -111,7 +111,7 @@ Check invoice payment type is correctly assigned::
     >>> invoice.payment_type == receivable
     True
 
-When its a return its ussed the supplier payment_kind::
+When its a return its ussed the supplier payment_type::
 
     >>> line = invoice.lines.new()
     >>> line.product = product
@@ -132,7 +132,7 @@ And where clearing all the lines the recevaible payment type is used::
     >>> invoice.untaxed_amount
     Decimal('0.00')
 
-Test confirming that we can confirm the invoice::
+The customer invoice can be posted::
 
     >>> line = invoice.lines.new()
     >>> line.product = product
@@ -143,6 +143,62 @@ Test confirming that we can confirm the invoice::
     >>> revenue.debit
     Decimal('0.00')
     >>> revenue.credit
+    Decimal('40.00')
+
+Check invoice payment type is correctly assigned on supplier invoices::
+
+    >>> invoice = Invoice(type='in')
+    >>> invoice.party = party
+    >>> invoice.payment_term = payment_term
+    >>> invoice.payment_type
+    >>> line = invoice.lines.new()
+    >>> line.product = product
+    >>> line.quantity = 1
+    >>> line.unit_price = Decimal('50.0')
+    >>> invoice.untaxed_amount
+    Decimal('50.00')
+    >>> invoice.payment_type == payable
+    True
+    >>> line = invoice.lines.new()
+    >>> line.product = product
+    >>> line.quantity = -1
+    >>> line.unit_price = Decimal('40.0')
+    >>> invoice.payment_type == payable
+    True
+
+When its a return its used the customer payment_type::
+
+    >>> line = invoice.lines.new()
+    >>> line.product = product
+    >>> line.quantity = -1
+    >>> line.unit_price = Decimal('40.0')
+    >>> invoice.untaxed_amount
+    Decimal('-30.00')
+    >>> invoice.payment_type == receivable
+    True
+
+And where clearing all the lines the payable payment type is used::
+
+    >>> _ = invoice.lines.pop()
+    >>> _ = invoice.lines.pop()
+    >>> _ = invoice.lines.pop()
+    >>> invoice.payment_type == payable
+    True
+    >>> invoice.untaxed_amount
+    Decimal('0.00')
+
+The supplier invoice can be posted::
+
+    >>> line = invoice.lines.new()
+    >>> line.product = product
+    >>> line.quantity = 1
+    >>> line.unit_price = Decimal('40.0')
+    >>> invoice.invoice_date = today
+    >>> invoice.click('post')
+    >>> expense.reload()
+    >>> expense.credit
+    Decimal('0.00')
+    >>> expense.debit
     Decimal('40.00')
 
 No payment have been generated::
