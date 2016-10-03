@@ -109,9 +109,8 @@ class Invoice:
             payment_type, date = key
             session_id, _, _ = PayLine.create()
             payline = PayLine(session_id)
-            payline.start.journal = payment_type.payment_journal
-            payline.start.date = date or Date.today()
-            payline.start.approve = True
+            payline.ask_journal.journal = payment_type.payment_journal
+            payline.ask_journal.date = date or Date.today()
             with Transaction().set_context(active_ids=lines):
                 action, data = payline.do_pay(None)
             if payment_type.approve_payments:
