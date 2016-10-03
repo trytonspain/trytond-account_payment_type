@@ -8,6 +8,12 @@ from trytond.transaction import Transaction
 
 __all__ = ['PaymentType']
 
+KINDS = [
+    ('both', 'Both'),
+    ('payable', 'Payable'),
+    ('receivable', 'Receivable'),
+    ]
+
 
 class PaymentType(ModelSQL, ModelView):
     'Payment Type'
@@ -24,10 +30,7 @@ class PaymentType(ModelSQL, ModelView):
     note = fields.Text('Description', translate=True,
         help=('Description of the payment type that will be shown in '
             'descriptions'))
-    kind = fields.Selection([
-            ('payable', 'Payable'),
-            ('receivable', 'Receivable'),
-            ], 'Kind of payment type', required=True,
+    kind = fields.Selection(KINDS, 'Kind of payment type', required=True,
         help='The kind of payment type.')
     payment_journal = fields.Many2One('account.payment.journal',
         'Payment Journal',
@@ -60,6 +63,10 @@ class PaymentType(ModelSQL, ModelView):
     @staticmethod
     def default_company():
         return Transaction().context.get('company')
+
+    @classmethod
+    def default_kind(cls):
+        return 'both'
 
     def get_rec_name(self, name):
         if self.code:

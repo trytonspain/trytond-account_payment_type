@@ -7,6 +7,7 @@ from trytond.model import fields
 from trytond.pool import Pool, PoolMeta
 from trytond.pyson import Bool, Eval, Not
 from trytond.transaction import Transaction
+from trytond.modules.account_payment_type.payment_type import KINDS
 
 __all__ = ['Invoice']
 ZERO = Decimal('0.0')
@@ -15,10 +16,8 @@ ZERO = Decimal('0.0')
 class Invoice:
     __metaclass__ = PoolMeta
     __name__ = 'account.invoice'
-    payment_type_kind = fields.Function(fields.Selection([
-            ('payable', 'Payable'),
-            ('receivable', 'Receivable'),
-            ], 'Kind of payment type',
+    payment_type_kind = fields.Function(fields.Selection(KINDS,
+            'Kind of payment type',
             states={
                 'invisible': True,
                 },
@@ -26,7 +25,7 @@ class Invoice:
         'on_change_with_payment_type_kind')
     payment_type = fields.Many2One('account.payment.type', 'Payment Type',
         domain=[
-            ('kind', '=', Eval('payment_type_kind')),
+            ('kind', 'in', ['both', Eval('payment_type_kind')]),
             ],
         states={
             'readonly': Not(Bool(Eval('state').in_(['draft', 'validated']))),
@@ -52,7 +51,7 @@ class Invoice:
         'payment_type', methods=['payment_type_kind'])
     def on_change_with_payment_type(self, name=None):
         kind = self.on_change_with_payment_type_kind()
-        if (self.payment_type and self.payment_type.kind == kind):
+        if (self.payment_type and self.payment_type.kind in ['both', kind]):
             return self.payment_type.id
         if not self.untaxed_amount:
             return None

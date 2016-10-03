@@ -1,3 +1,4 @@
+* Add both payment_type kind
 * Allow payment creation when the invoices are posted
 * Remove payment_type from Account Move Line
 

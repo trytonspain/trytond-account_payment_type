@@ -240,3 +240,35 @@ Create a new invoice and check it has the payment created::
     Decimal('55.00')
     >>> payment.state
     u'approved'
+
+Create both payment type::
+
+    >>> both = PaymentType(name='Both', kind='both')
+    >>> both.save()
+
+We can use both in negative and positive invoices::
+
+    >>> invoice = Invoice()
+    >>> invoice.party = party
+    >>> invoice.payment_term = payment_term
+    >>> invoice.payment_type = both
+    >>> line = invoice.lines.new()
+    >>> line.product = product
+    >>> line.quantity = 1
+    >>> line.unit_price = Decimal('50.0')
+    >>> invoice.untaxed_amount
+    Decimal('50.00')
+    >>> invoice.save()
+    >>> invoice.payment_type == both
+    True
+    >>> invoice = Invoice()
+    >>> invoice.party = party
+    >>> invoice.payment_term = payment_term
+    >>> invoice.payment_type = both
+    >>> line = invoice.lines.new()
+    >>> line.product = product
+    >>> line.quantity = -1
+    >>> line.unit_price = Decimal('40.0')
+    >>> invoice.save()
+    >>> invoice.payment_type == both
+    True
