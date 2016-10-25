@@ -26,10 +26,6 @@ msgctxt "field:account.payment.type,approve_payments:"
 msgid "Aprove Payments?"
 msgstr "Aprovar pagaments?"
 
-msgctxt "field:account.payment.type,code:"
-msgid "Code"
-msgstr "Codi"
-
 msgctxt "field:account.payment.type,company:"
 msgid "Company"
 msgstr "Empresa"
@@ -47,8 +43,8 @@ msgid "ID"
 msgstr "ID"
 
 msgctxt "field:account.payment.type,kind:"
-msgid "Kind of payment type"
-msgstr "Classe de tipus de pagament"
+msgid "Kind"
+msgstr "Classe"
 
 msgctxt "field:account.payment.type,name:"
 msgid "Name"
@@ -125,10 +121,6 @@ msgstr "Tipus de pagament de proveïdor"
 msgctxt "help:account.payment.type,approve_payments:"
 msgid "If marked, payments will be approved after creation"
 msgstr "Si es marca els pagaments s'aprovaran una vegada creats"
-
-msgctxt "help:account.payment.type,kind:"
-msgid "The kind of payment type."
-msgstr "La classe de tipus de pagament."
 
 msgctxt "help:account.payment.type,note:"
 msgid "Description of the payment type that will be shown in descriptions"
