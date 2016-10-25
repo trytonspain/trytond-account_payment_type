@@ -5,14 +5,12 @@ copyright notices and license types. -->
 <form col="4">
     <label name="name"/>
     <field name="name"/>
-    <label name="code"/>
-    <field name="code"/>
     <label name="active"/>
     <field name="active"/>
-    <label name="company"/>
-    <field name="company"/>
     <label name="kind"/>
     <field name="kind"/>
+    <label name="company"/>
+    <field name="company"/>
     <separator id="payment" string="Payments" colspan="4"/>
     <label name="payment_journal"/>
     <field name="payment_journal"/>

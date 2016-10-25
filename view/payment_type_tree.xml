@@ -1,9 +1,11 @@
 <?xml version="1.0"?>
+<!-- This file is part of account_payment_type module for Tryton.
+The COPYRIGHT file at the top level of this repository contains the full
+copyright notices and license types. -->
 <tree>
     <field name="name"/>
-    <field name="code"/>
-    <field name="company"/>
     <field name="kind"/>
+    <field name="company"/>
     <field name="active" tree_invisible="1"/>
 </tree>
 

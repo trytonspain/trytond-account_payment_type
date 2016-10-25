@@ -20,7 +20,6 @@ class PaymentType(ModelSQL, ModelView):
     __name__ = 'account.payment.type'
 
     name = fields.Char('Name', required=True, translate=True)
-    code = fields.Char('Code')
     active = fields.Boolean('Active')
     company = fields.Many2One('company.company', 'Company', required=True,
         select=True, readonly=True, domain=[
@@ -67,12 +66,6 @@ class PaymentType(ModelSQL, ModelView):
     @classmethod
     def default_kind(cls):
         return 'both'
-
-    def get_rec_name(self, name):
-        if self.code:
-            return '[' + self.code + '] ' + self.name
-        else:
-            return self.name
 
     @fields.depends('payment_journal', 'approve_payments')
     def on_change_payment_journal(self):
