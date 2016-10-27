@@ -55,7 +55,9 @@ class Invoice:
             return self.payment_type.id
         if not self.untaxed_amount:
             return None
-        for party in [self.party, self.company]:
+        for party in [
+                self.party,
+                self.company.party if self.company else None]:
             if not party:
                 continue
             if self.type == 'out':
