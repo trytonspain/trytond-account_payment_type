@@ -2,9 +2,9 @@
 # The COPYRIGHT file at the top level of this repository contains
 # the full copyright notices and license terms.
 from trytond.model import ModelView, ModelSQL, fields
-from trytond.pyson import Eval, If, Bool
+from trytond.pyson import Eval, Bool
 from trytond.pool import Pool
-from trytond.transaction import Transaction
+from trytond import backend
 
 __all__ = ['PaymentType']
 
@@ -21,11 +21,6 @@ class PaymentType(ModelSQL, ModelView):
 
     name = fields.Char('Name', required=True, translate=True)
     active = fields.Boolean('Active')
-    company = fields.Many2One('company.company', 'Company', required=True,
-        select=True, readonly=True, domain=[
-            ('id', If(Eval('context', {}).contains('company'), '=', '!='),
-                Eval('context', {}).get('company', 0)),
-            ])
     note = fields.Text('Description', translate=True,
         help=('Description of the payment type that will be shown in '
             'descriptions'))
@@ -40,6 +35,16 @@ class PaymentType(ModelSQL, ModelView):
             },
         depends=['payment_journal'],
         help='If marked, payments will be approved after creation')
+
+    @classmethod
+    def __register__(cls, module_name):
+        TableHandler = backend.get('TableHandler')
+        table = TableHandler(cls, module_name)
+
+        super(PaymentType, cls).__register__(module_name)
+
+        # Migration from 4.2: drop required on company
+        table.not_null_action('company', action='remove')
 
     @classmethod
     def __setup__(cls):
@@ -57,10 +62,6 @@ class PaymentType(ModelSQL, ModelView):
     @staticmethod
     def default_active():
         return True
-
-    @staticmethod
-    def default_company():
-        return Transaction().context.get('company')
 
     @classmethod
     def default_kind(cls):

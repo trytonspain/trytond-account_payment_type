@@ -1,3 +1,5 @@
+* Allow to share payment types between companies
+
 Version 4.2.0 - 2016-11-28
 * Bug fixes (see mercurial logs for details)
 * Remove code from payment_type
