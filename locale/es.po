@@ -18,6 +18,14 @@ msgctxt "field:account.invoice,payment_type_kind:"
 msgid "Kind of payment type"
 msgstr "Clase del tipo de pago"
 
+msgctxt "field:account.payment.group,payment_type:"
+msgid "Payment Type"
+msgstr "Tipo de pago"
+
+msgctxt "field:account.payment.journal,payment_type:"
+msgid "Payment Type"
+msgstr "Tipo de pago"
+
 msgctxt "field:account.payment.type,active:"
 msgid "Active"
 msgstr "Activo"
@@ -25,10 +33,6 @@ msgstr "Activo"
 msgctxt "field:account.payment.type,approve_payments:"
 msgid "Aprove Payments?"
 msgstr "Aprovar pagos?"
-
-msgctxt "field:account.payment.type,company:"
-msgid "Company"
-msgstr "Empresa"
 
 msgctxt "field:account.payment.type,create_date:"
 msgid "Create Date"
@@ -41,6 +45,10 @@ msgstr "Usuario de creación"
 msgctxt "field:account.payment.type,id:"
 msgid "ID"
 msgstr "ID"
+
+msgctxt "field:account.payment.type,journals:"
+msgid "Journals"
+msgstr "Diarios"
 
 msgctxt "field:account.payment.type,kind:"
 msgid "Kind"
@@ -55,8 +63,8 @@ msgid "Description"
 msgstr "Descripción"
 
 msgctxt "field:account.payment.type,payment_journal:"
-msgid "Payment Journal"
-msgstr "Diario de pago"
+msgid "Default Journal"
+msgstr "Diario por defecto"
 
 msgctxt "field:account.payment.type,rec_name:"
 msgid "Name"

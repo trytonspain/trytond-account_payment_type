@@ -1,3 +1,4 @@
+* Add direct relation between payment_type and payment journals
 * Allow to share payment types between companies
 
 Version 4.2.0 - 2016-11-28

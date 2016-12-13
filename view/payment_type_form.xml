@@ -9,12 +9,17 @@ copyright notices and license types. -->
     <field name="active"/>
     <label name="kind"/>
     <field name="kind"/>
-    <separator id="payment" string="Payments" colspan="4"/>
-    <label name="payment_journal"/>
-    <field name="payment_journal"/>
-    <label name="approve_payments"/>
-    <field name="approve_payments"/>
-    <separator name="note" colspan="4"/>
-    <field name="note" colspan="4"/>
+    <notebook>
+        <page id="payment" string="Payments">
+            <label name="payment_journal"/>
+            <field name="payment_journal"/>
+            <label name="approve_payments"/>
+            <field name="approve_payments"/>
+            <field name="journals" colspan="4"/>
+        </page>
+        <page name="note">
+            <field name="note" colspan="4"/>
+        </page>
+    </notebook>
 </form>
 

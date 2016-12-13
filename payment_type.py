@@ -25,8 +25,17 @@ class PaymentType(ModelSQL, ModelView):
         help=('Description of the payment type that will be shown in '
             'descriptions'))
     kind = fields.Selection(KINDS, 'Kind', required=True)
+    journals = fields.One2Many('account.payment.journal', 'payment_type',
+        'Journals')
     payment_journal = fields.Many2One('account.payment.journal',
-        'Payment Journal',
+        'Default Journal',
+        domain=[
+            ('payment_type', '=', Eval('id')),
+            ],
+        states={
+            'invisible': ~Bool(Eval('journals', [])),
+            },
+        depends=['id', 'journals'],
         help=('The payment journal for creating payments when the invoices '
             'are posted. A payment for each maturity date will be created.'))
     approve_payments = fields.Boolean('Aprove Payments?',
