@@ -93,6 +93,14 @@ class PaymentType(ModelSQL, ModelView):
         super(PaymentType, cls).write(*args)
 
     @classmethod
+    def copy(cls, records, default=None):
+        if default is None:
+            default = {}
+        default.setdefault('journals', [])
+        default.setdefault('payment_journal')
+        return super(PaymentType, cls).copy(records, default=default)
+
+    @classmethod
     def check_modify_fields(cls, payment_types, fields):
         pool = Pool()
         IrModel = pool.get('ir.model')
