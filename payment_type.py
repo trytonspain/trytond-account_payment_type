@@ -96,7 +96,8 @@ class PaymentType(ModelSQL, ModelView):
     def copy(cls, records, default=None):
         if default is None:
             default = {}
-        default.setdefault('journals', [])
+        default = default.copy()
+        default.setdefault('journals')
         default.setdefault('payment_journal')
         return super(PaymentType, cls).copy(records, default=default)
 
