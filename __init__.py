@@ -2,15 +2,15 @@
 # The COPYRIGHT file at the top level of this repository contains
 # the full copyright notices and license terms.
 from trytond.pool import Pool
-from .payment_type import *
-from .party import *
-from .invoice import *
+import payment_type
+import party
+import invoice
 
 
 def register():
     Pool.register(
-        PaymentType,
-        PartyAccountPaymentType,
-        Party,
-        Invoice,
+        payment_type.PaymentType,
+        party.PartyAccountPaymentType,
+        party.Party,
+        invoice.Invoice,
         module='account_payment_type', type_='model')
