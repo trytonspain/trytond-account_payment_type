@@ -2,9 +2,9 @@
 # The COPYRIGHT file at the top level of this repository contains
 # the full copyright notices and license terms.
 from trytond.model import ModelView, ModelSQL, fields
-from trytond.pyson import Eval, Bool
+from trytond.pyson import Eval, If, Bool
 from trytond.pool import Pool
-from trytond import backend
+from trytond.transaction import Transaction
 
 __all__ = ['PaymentType']
 
@@ -21,21 +21,17 @@ class PaymentType(ModelSQL, ModelView):
 
     name = fields.Char('Name', required=True, translate=True)
     active = fields.Boolean('Active')
+    company = fields.Many2One('company.company', 'Company', required=True,
+        select=True, readonly=True, domain=[
+            ('id', If(Eval('context', {}).contains('company'), '=', '!='),
+                Eval('context', {}).get('company', 0)),
+            ])
     note = fields.Text('Description', translate=True,
         help=('Description of the payment type that will be shown in '
             'descriptions'))
     kind = fields.Selection(KINDS, 'Kind', required=True)
-    journals = fields.One2Many('account.payment.journal', 'payment_type',
-        'Journals')
     payment_journal = fields.Many2One('account.payment.journal',
-        'Default Journal',
-        domain=[
-            ('payment_type', '=', Eval('id')),
-            ],
-        states={
-            'invisible': ~Bool(Eval('journals', [])),
-            },
-        depends=['id', 'journals'],
+        'Payment Journal',
         help=('The payment journal for creating payments when the invoices '
             'are posted. A payment for each maturity date will be created.'))
     approve_payments = fields.Boolean('Aprove Payments?',
@@ -44,16 +40,6 @@ class PaymentType(ModelSQL, ModelView):
             },
         depends=['payment_journal'],
         help='If marked, payments will be approved after creation')
-
-    @classmethod
-    def __register__(cls, module_name):
-        TableHandler = backend.get('TableHandler')
-        table = TableHandler(cls, module_name)
-
-        super(PaymentType, cls).__register__(module_name)
-
-        # Migration from 4.2: drop required on company
-        table.not_null_action('company', action='remove')
 
     @classmethod
     def __setup__(cls):
@@ -71,6 +57,10 @@ class PaymentType(ModelSQL, ModelView):
     @staticmethod
     def default_active():
         return True
+
+    @staticmethod
+    def default_company():
+        return Transaction().context.get('company')
 
     @classmethod
     def default_kind(cls):
@@ -91,15 +81,6 @@ class PaymentType(ModelSQL, ModelView):
                 cls.check_modify_fields(payment_types, keys)
             args.extend((payment_types, values))
         super(PaymentType, cls).write(*args)
-
-    @classmethod
-    def copy(cls, records, default=None):
-        if default is None:
-            default = {}
-        default = default.copy()
-        default.setdefault('journals')
-        default.setdefault('payment_journal')
-        return super(PaymentType, cls).copy(records, default=default)
 
     @classmethod
     def check_modify_fields(cls, payment_types, fields):

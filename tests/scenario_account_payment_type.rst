@@ -211,9 +211,8 @@ Create a payment journal for the payment type and mark the payment type to
 create payments::
 
     >>> PaymentJournal = Model.get('account.payment.journal')
-    >>> payment_journal = receivable.journals.new()
-    >>> payment_journal.name='Manual'
-    >>> payment_journal.process_method='manual'
+    >>> payment_journal = PaymentJournal(name='Manual',
+    ...     process_method='manual')
     >>> payment_journal.save()
     >>> receivable.payment_journal = payment_journal
     >>> receivable.approve_payments = True
