@@ -75,32 +75,8 @@ class Invoice:
                 return payment_type.id
         return None
 
-    @classmethod
-    def post(cls, invoices):
-        pool = Pool()
-        Date = pool.get('ir.date')
-        Payment = pool.get('account.payment')
-        PayLine = pool.get('account.move.line.pay', type='wizard')
-        super(Invoice, cls).post(invoices)
-        lines_to_pay = defaultdict(list)
-        for invoice in invoices:
-            if (invoice.payment_type
-                    and invoice.payment_type.payment_journal):
-                for line in invoice.lines_to_pay:
-                    key = (invoice.payment_type, line.maturity_date)
-                    lines_to_pay[key].append(line.id)
-
-        to_approve = []
-        for key, lines in lines_to_pay.iteritems():
-            payment_type, date = key
-            session_id, _, _ = PayLine.create()
-            payline = PayLine(session_id)
-            payline.ask_journal.journal = payment_type.payment_journal
-            payline.ask_journal.date = date or Date.today()
-            with Transaction().set_context(active_ids=lines):
-                action, data = payline.do_pay(None)
-            if payment_type.approve_payments:
-                to_approve.extend(data['res_id'])
-            PayLine.delete(session_id)
-        if to_approve:
-            Payment.approve(Payment.browse(to_approve))
+    def _get_move_line(self, date, amount):
+        line = super(Invoice, self)._get_move_line(date, amount)
+        if self.payment_type:
+            line.payment_type = self.payment_type
+        return line

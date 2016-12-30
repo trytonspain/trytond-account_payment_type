@@ -20,6 +20,7 @@ class PaymentType(ModelSQL, ModelView):
     __name__ = 'account.payment.type'
 
     name = fields.Char('Name', required=True, translate=True)
+    code = fields.Char('Code')
     active = fields.Boolean('Active')
     company = fields.Many2One('company.company', 'Company', required=True,
         select=True, readonly=True, domain=[
@@ -30,22 +31,13 @@ class PaymentType(ModelSQL, ModelView):
         help=('Description of the payment type that will be shown in '
             'descriptions'))
     kind = fields.Selection(KINDS, 'Kind', required=True)
-    payment_journal = fields.Many2One('account.payment.journal',
-        'Payment Journal',
-        help=('The payment journal for creating payments when the invoices '
-            'are posted. A payment for each maturity date will be created.'))
-    approve_payments = fields.Boolean('Aprove Payments?',
-        states={
-            'invisible': ~Bool(Eval('payment_journal', 0)),
-            },
-        depends=['payment_journal'],
-        help='If marked, payments will be approved after creation')
 
     @classmethod
     def __setup__(cls):
         super(PaymentType, cls).__setup__()
         cls._check_modify_fields = set(['kind'])
         cls._check_modify_related_models = set([
+                ('account.move.line', 'payment_type'),
                 ('account.invoice', 'payment_type'),
                 ])
         cls._error_messages.update({
@@ -62,14 +54,11 @@ class PaymentType(ModelSQL, ModelView):
     def default_company():
         return Transaction().context.get('company')
 
-    @classmethod
-    def default_kind(cls):
-        return 'both'
-
-    @fields.depends('payment_journal', 'approve_payments')
-    def on_change_payment_journal(self):
-        if not self.payment_journal:
-            self.approve_payments = False
+    def get_rec_name(self, name):
+        if self.code:
+            return '[' + self.code + '] ' + self.name
+        else:
+            return self.name
 
     @classmethod
     def write(cls, *args):
