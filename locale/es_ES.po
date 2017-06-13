@@ -23,8 +23,8 @@ msgid "Payment Type"
 msgstr "Tipo de pago"
 
 msgctxt "field:account.invoice,payment_type_kind:"
-msgid "Kind of payment type"
-msgstr "Clase del tipo de pago"
+msgid "Kind"
+msgstr "Clase"
 
 msgctxt "field:account.move.line,account_kind:"
 msgid "Kind"

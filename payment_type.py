@@ -30,7 +30,7 @@ class PaymentType(ModelSQL, ModelView):
     note = fields.Text('Description', translate=True,
         help=('Description of the payment type that will be shown in '
             'descriptions'))
-    kind = fields.Selection(KINDS, 'Kind of payment type', required=True,
+    kind = fields.Selection(KINDS, 'Kind', required=True,
         help='The kind of payment type.')
 
     @classmethod
