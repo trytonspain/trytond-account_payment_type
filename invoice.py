@@ -46,43 +46,36 @@ class Invoice:
                     return 'receivable'
         return 'receivable' if self.type == 'out' else 'payable'
 
-    @fields.depends('party', 'company', 'type', 'untaxed_amount', 'lines',
-        'payment_type', methods=['payment_type_kind'])
+    @fields.depends('party', 'company', 'type', 'untaxed_amount', 'lines')
     def on_change_with_payment_type(self, name=None):
         kind = self.on_change_with_payment_type_kind()
-        if (self.payment_type and self.payment_type.kind == kind):
-            return self.payment_type.id
         if not self.untaxed_amount:
             return None
         if self.party:
             if self.type == 'out':
-                if (self.untaxed_amount >= ZERO
-                        and self.party.customer_payment_type):
+                if (kind == 'receivable' and self.party.customer_payment_type):
                     return self.party.customer_payment_type.id
-                elif (self.untaxed_amount < ZERO
-                        and self.party.supplier_payment_type):
+                elif (kind == 'payable' and self.party.supplier_payment_type):
                     return self.party.supplier_payment_type.id
             elif self.type == 'in':
-                if (self.untaxed_amount >= ZERO
-                        and self.party.supplier_payment_type):
+                if (kind == 'payable' and self.party.supplier_payment_type):
                     return self.party.supplier_payment_type.id
-                elif (self.untaxed_amount < ZERO
-                        and self.party.customer_payment_type):
+                elif (kind == 'receivable' and self.party.customer_payment_type):
                     return self.party.customer_payment_type.id
 
         if self.company:
             if self.type == 'out':
-                if (self.untaxed_amount >= ZERO
+                if (kind == 'receivable'
                         and self.company.party.customer_payment_type):
                     return self.company.party.customer_payment_type.id
-                elif (self.untaxed_amount < ZERO
+                elif (kind == 'payable'
                         and self.company.party.supplier_payment_type):
                     return self.company.party.supplier_payment_type.id
             elif self.type == 'in':
-                if (self.untaxed_amount >= ZERO
+                if (kind == 'payable'
                         and self.company.party.supplier_payment_type):
                     return self.company.party.supplier_payment_type.id
-                elif (self.untaxed_amount < ZERO
+                elif (kind == 'receivable'
                         and self.company.party.customer_payment_type):
                     return self.company.party.customer_payment_type.id
         return None
