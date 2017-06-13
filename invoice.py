@@ -2,11 +2,9 @@
 # The COPYRIGHT file at the top level of this repository contains
 # the full copyright notices and license terms.
 from decimal import Decimal
-from collections import defaultdict
 from trytond.model import fields
-from trytond.pool import Pool, PoolMeta
+from trytond.pool import PoolMeta
 from trytond.pyson import Bool, Eval, Not
-from trytond.transaction import Transaction
 from trytond.modules.account_payment_type.payment_type import KINDS
 
 __all__ = ['Invoice']
@@ -47,12 +45,9 @@ class Invoice:
                     return 'receivable'
         return 'receivable' if self.type == 'out' else 'payable'
 
-    @fields.depends('party', 'company', 'type', 'untaxed_amount', 'lines',
-        'payment_type', methods=['payment_type_kind'])
+    @fields.depends('party', 'company', 'type', 'untaxed_amount', 'lines')
     def on_change_with_payment_type(self, name=None):
         kind = self.on_change_with_payment_type_kind()
-        if (self.payment_type and self.payment_type.kind in ['both', kind]):
-            return self.payment_type.id
         if not self.untaxed_amount:
             return None
         for party in [
@@ -60,13 +55,14 @@ class Invoice:
                 self.company.party if self.company else None]:
             if not party:
                 continue
+
             if self.type == 'out':
-                if self.untaxed_amount >= ZERO:
+                if kind == 'receivable':
                     name = 'customer_payment_type'
                 else:
                     name = 'supplier_payment_type'
             elif self.type == 'in':
-                if self.untaxed_amount >= ZERO:
+                if kind == 'payable':
                     name = 'supplier_payment_type'
                 else:
                     name = 'customer_payment_type'

@@ -2,7 +2,7 @@
 # The COPYRIGHT file at the top level of this repository contains
 # the full copyright notices and license terms.
 from trytond.model import ModelView, ModelSQL, fields
-from trytond.pyson import Eval, If, Bool
+from trytond.pyson import Eval, If
 from trytond.pool import Pool
 from trytond.transaction import Transaction
 
@@ -30,7 +30,8 @@ class PaymentType(ModelSQL, ModelView):
     note = fields.Text('Description', translate=True,
         help=('Description of the payment type that will be shown in '
             'descriptions'))
-    kind = fields.Selection(KINDS, 'Kind', required=True)
+    kind = fields.Selection(KINDS, 'Kind', required=True,
+        help='The kind of payment type.')
 
     @classmethod
     def __setup__(cls):
@@ -53,6 +54,10 @@ class PaymentType(ModelSQL, ModelView):
     @staticmethod
     def default_company():
         return Transaction().context.get('company')
+
+    @classmethod
+    def default_kind(cls):
+        return 'both'
 
     def get_rec_name(self, name):
         if self.code:
