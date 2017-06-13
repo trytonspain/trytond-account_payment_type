@@ -51,33 +51,25 @@ class Invoice:
         kind = self.on_change_with_payment_type_kind()
         if not self.untaxed_amount:
             return None
-        if self.party:
-            if self.type == 'out':
-                if (kind == 'receivable' and self.party.customer_payment_type):
-                    return self.party.customer_payment_type.id
-                elif (kind == 'payable' and self.party.supplier_payment_type):
-                    return self.party.supplier_payment_type.id
-            elif self.type == 'in':
-                if (kind == 'payable' and self.party.supplier_payment_type):
-                    return self.party.supplier_payment_type.id
-                elif (kind == 'receivable' and self.party.customer_payment_type):
-                    return self.party.customer_payment_type.id
+        for party in [
+                self.party,
+                self.company.party if self.company else None]:
+            if not party:
+                continue
 
-        if self.company:
             if self.type == 'out':
-                if (kind == 'receivable'
-                        and self.company.party.customer_payment_type):
-                    return self.company.party.customer_payment_type.id
-                elif (kind == 'payable'
-                        and self.company.party.supplier_payment_type):
-                    return self.company.party.supplier_payment_type.id
+                if kind == 'receivable':
+                    name = 'customer_payment_type'
+                else:
+                    name = 'supplier_payment_type'
             elif self.type == 'in':
-                if (kind == 'payable'
-                        and self.company.party.supplier_payment_type):
-                    return self.company.party.supplier_payment_type.id
-                elif (kind == 'receivable'
-                        and self.company.party.customer_payment_type):
-                    return self.company.party.customer_payment_type.id
+                if kind == 'payable':
+                    name = 'supplier_payment_type'
+                else:
+                    name = 'customer_payment_type'
+            payment_type = getattr(party, name)
+            if payment_type:
+                return payment_type.id
         return None
 
     def _get_move_line(self, date, amount):
