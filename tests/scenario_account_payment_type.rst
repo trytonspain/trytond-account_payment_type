@@ -111,7 +111,7 @@ Check invoice payment type is correctly assigned::
     >>> invoice.payment_type == receivable
     True
 
-When its a return its ussed the supplier payment_type::
+When its a return its ussed the supplier payment_kind::
 
     >>> line = invoice.lines.new()
     >>> line.product = product
@@ -128,22 +128,11 @@ And where clearing all the lines the recevaible payment type is used::
     >>> _ = invoice.lines.pop()
     >>> _ = invoice.lines.pop()
     >>> invoice.payment_type == receivable
-    True
+    False
+    >>> invoice.payment_type == payable
+    False
     >>> invoice.untaxed_amount
     Decimal('0.00')
-
-The customer invoice can be posted::
-
-    >>> line = invoice.lines.new()
-    >>> line.product = product
-    >>> line.quantity = 1
-    >>> line.unit_price = Decimal('40.0')
-    >>> invoice.click('post')
-    >>> revenue.reload()
-    >>> revenue.debit
-    Decimal('0.00')
-    >>> revenue.credit
-    Decimal('40.00')
 
 Check invoice payment type is correctly assigned on supplier invoices::
 
@@ -183,63 +172,11 @@ And where clearing all the lines the payable payment type is used::
     >>> _ = invoice.lines.pop()
     >>> _ = invoice.lines.pop()
     >>> invoice.payment_type == payable
-    True
+    False
+    >>> invoice.payment_type == receivable
+    False
     >>> invoice.untaxed_amount
     Decimal('0.00')
-
-The supplier invoice can be posted::
-
-    >>> line = invoice.lines.new()
-    >>> line.product = product
-    >>> line.quantity = 1
-    >>> line.unit_price = Decimal('40.0')
-    >>> invoice.invoice_date = today
-    >>> invoice.click('post')
-    >>> expense.reload()
-    >>> expense.credit
-    Decimal('0.00')
-    >>> expense.debit
-    Decimal('40.00')
-
-No payment have been generated::
-
-    >>> Payment = Model.get('account.payment')
-    >>> len(Payment.find([]))
-    0
-
-Create a payment journal for the payment type and mark the payment type to
-create payments::
-
-    >>> PaymentJournal = Model.get('account.payment.journal')
-    >>> payment_journal = PaymentJournal(name='Manual',
-    ...     process_method='manual')
-    >>> payment_journal.save()
-    >>> receivable.payment_journal = payment_journal
-    >>> receivable.approve_payments = True
-    >>> receivable.save()
-
-Create a new invoice and check it has the payment created::
-
-    >>> invoice = Invoice()
-    >>> invoice.party = party
-    >>> invoice.payment_term = payment_term
-    >>> invoice.payment_type
-    >>> line = invoice.lines.new()
-    >>> line.product = product
-    >>> line.quantity = 1
-    >>> line.unit_price = Decimal('50.0')
-    >>> invoice.payment_type == receivable
-    True
-    >>> invoice.click('post')
-    >>> invoice.total_amount
-    Decimal('55.00')
-    >>> payment, = Payment.find([])
-    >>> payment.line.origin == invoice
-    True
-    >>> payment.amount
-    Decimal('55.00')
-    >>> payment.state
-    u'approved'
 
 Create both payment type::
 
@@ -251,24 +188,25 @@ We can use both in negative and positive invoices::
     >>> invoice = Invoice()
     >>> invoice.party = party
     >>> invoice.payment_term = payment_term
-    >>> invoice.payment_type = both
     >>> line = invoice.lines.new()
     >>> line.product = product
     >>> line.quantity = 1
     >>> line.unit_price = Decimal('50.0')
+    >>> invoice.payment_type = both
     >>> invoice.untaxed_amount
     Decimal('50.00')
     >>> invoice.save()
+
     >>> invoice.payment_type == both
     True
     >>> invoice = Invoice()
     >>> invoice.party = party
     >>> invoice.payment_term = payment_term
-    >>> invoice.payment_type = both
     >>> line = invoice.lines.new()
     >>> line.product = product
     >>> line.quantity = -1
     >>> line.unit_price = Decimal('40.0')
+    >>> invoice.payment_type = both
     >>> invoice.save()
     >>> invoice.payment_type == both
     True
