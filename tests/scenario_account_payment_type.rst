@@ -146,3 +146,47 @@ And where clearing all the lines the recevaible payment type is used::
     False
     >>> invoice.untaxed_amount
     Decimal('0.00')
+
+Check invoice payment type is correctly assigned on supplier invoices::
+
+    >>> invoice = Invoice(type='in')
+    >>> invoice.party = party
+    >>> invoice.payment_term = payment_term
+    >>> invoice.payment_type
+    >>> line = invoice.lines.new()
+    >>> line.product = product
+    >>> line.quantity = 1
+    >>> line.unit_price = Decimal('50.0')
+    >>> invoice.untaxed_amount
+    Decimal('50.00')
+    >>> invoice.payment_type == payable
+    True
+    >>> line = invoice.lines.new()
+    >>> line.product = product
+    >>> line.quantity = -1
+    >>> line.unit_price = Decimal('40.0')
+    >>> invoice.payment_type == payable
+    True
+
+When its a return its used the customer payment_type::
+
+    >>> line = invoice.lines.new()
+    >>> line.product = product
+    >>> line.quantity = -1
+    >>> line.unit_price = Decimal('40.0')
+    >>> invoice.untaxed_amount
+    Decimal('-30.00')
+    >>> invoice.payment_type == receivable
+    True
+
+And where clearing all the lines the payable payment type is used::
+
+    >>> _ = invoice.lines.pop()
+    >>> _ = invoice.lines.pop()
+    >>> _ = invoice.lines.pop()
+    >>> invoice.payment_type == payable
+    False
+    >>> invoice.payment_type == receivable
+    False
+    >>> invoice.untaxed_amount
+    Decimal('0.00')
