@@ -223,3 +223,23 @@ We can use both in negative and positive invoices::
     >>> invoice.save()
     >>> invoice.payment_type == both
     True
+
+Post an invoice with payment type::
+
+    >>> invoice = Invoice()
+    >>> invoice.party = party
+    >>> invoice.payment_term = payment_term
+    >>> line = invoice.lines.new()
+    >>> line.product = product
+    >>> line.quantity = 1
+    >>> line.unit_price = Decimal('50.0')
+    >>> invoice.payment_type = receivable
+    >>> invoice.untaxed_amount
+    Decimal('50.00')
+    >>> invoice.save()
+    >>> invoice.click('post')
+    >>> line1, _, _ = invoice.move.lines
+    >>> line1.payment_type == receivable
+    True
+    >>> line1.account == account_receivable
+    True
