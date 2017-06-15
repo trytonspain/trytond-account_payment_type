@@ -230,7 +230,6 @@ Post an invoice with payment type::
     Decimal('50.00')
     >>> invoice.save()
     >>> invoice.click('post')
-    >>> import pdb; pdb.set_trace()
     >>> line1, _, _ = invoice.move.lines
     >>> line1.payment_type == receivable
     True
