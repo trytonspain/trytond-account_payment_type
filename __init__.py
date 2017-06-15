@@ -10,9 +10,9 @@ from . import invoice
 
 def register():
     Pool.register(
+        payment_type.PaymentType,
         move.Move,
         move.Line,
-        payment_type.PaymentType,
         party.PartyAccountPaymentType,
         party.Party,
         invoice.Invoice,
