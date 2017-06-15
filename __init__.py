@@ -13,7 +13,7 @@ def register():
         move.Move,
         move.Line,
         payment_type.PaymentType,
-        payment_type.PartyAccountPaymentType,
+        party.PartyAccountPaymentType,
         party.Party,
         invoice.Invoice,
         module='account_payment_type', type_='model')
