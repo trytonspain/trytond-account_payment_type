@@ -43,10 +43,10 @@ Create chart of accounts::
 
     >>> _ = create_chart(company)
     >>> accounts = get_accounts(company)
-    >>> receivable = accounts['receivable']
-    >>> revenue = accounts['revenue']
-    >>> expense = accounts['expense']
-    >>> cash = accounts['cash']
+    >>> account_receivable = accounts['receivable']
+    >>> account_revenue = accounts['revenue']
+    >>> account_expense = accounts['expense']
+    >>> account_cash = accounts['cash']
 
 Create tax::
 
@@ -66,8 +66,8 @@ Create product::
     >>> template.type = 'service'
     >>> template.list_price = Decimal('50')
     >>> template.cost_price = Decimal('25')
-    >>> template.account_expense = expense
-    >>> template.account_revenue = revenue
+    >>> template.account_expense = account_expense
+    >>> template.account_revenue = account_revenue
     >>> template.customer_taxes.append(tax)
     >>> template.save()
     >>> product.template = template
@@ -201,9 +201,9 @@ We can use both in negative and positive invoices::
     >>> invoice.untaxed_amount
     Decimal('50.00')
     >>> invoice.save()
-
     >>> invoice.payment_type == both
     True
+
     >>> invoice = Invoice()
     >>> invoice.party = party
     >>> invoice.payment_term = payment_term
@@ -214,4 +214,25 @@ We can use both in negative and positive invoices::
     >>> invoice.payment_type = both
     >>> invoice.save()
     >>> invoice.payment_type == both
+    True
+
+Post an invoice with payment type::
+
+    >>> invoice = Invoice()
+    >>> invoice.party = party
+    >>> invoice.payment_term = payment_term
+    >>> line = invoice.lines.new()
+    >>> line.product = product
+    >>> line.quantity = 1
+    >>> line.unit_price = Decimal('50.0')
+    >>> invoice.payment_type = receivable
+    >>> invoice.untaxed_amount
+    Decimal('50.00')
+    >>> invoice.save()
+    >>> invoice.click('post')
+    >>> import pdb; pdb.set_trace()
+    >>> line1, _, _ = invoice.move.lines
+    >>> line1.payment_type == receivable
+    True
+    >>> line1.account == account_receivable
     True

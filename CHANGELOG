@@ -3,10 +3,7 @@ Version 4.2.1 - 2016-12-14
 
 Version 4.2.0 - 2016-11-28
 * Bug fixes (see mercurial logs for details)
-* Remove code from payment_type
 * Add both payment_type kind
-* Allow payment creation when the invoices are posted
-* Remove payment_type from Account Move Line
 
 Version 4.0.0 - 2016-05-03
 * Return account_kind if account is payable/receivable despite of the move line
