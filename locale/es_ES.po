@@ -23,12 +23,12 @@ msgid "Payment Type"
 msgstr "Tipo de pago"
 
 msgctxt "field:account.invoice,payment_type_kind:"
-msgid "Kind"
-msgstr "Clase"
+msgid "Kind of payment type"
+msgstr "Clase del tipo de pago"
 
 msgctxt "field:account.move.line,account_kind:"
 msgid "Kind"
-msgstr "Clase"
+msgstr "Tipo"
 
 msgctxt "field:account.move.line,payment_type:"
 msgid "Payment Type"
@@ -48,19 +48,19 @@ msgstr "Empresa"
 
 msgctxt "field:account.payment.type,create_date:"
 msgid "Create Date"
-msgstr "Fecha creación"
+msgstr "Fecha de creación"
 
 msgctxt "field:account.payment.type,create_uid:"
 msgid "Create User"
-msgstr "Usuario creación"
+msgstr "Usuario de creación"
 
 msgctxt "field:account.payment.type,id:"
 msgid "ID"
 msgstr "ID"
 
 msgctxt "field:account.payment.type,kind:"
-msgid "Kind of payment type"
-msgstr "Clase del tipo de pago"
+msgid "Kind"
+msgstr "Clase"
 
 msgctxt "field:account.payment.type,name:"
 msgid "Name"
@@ -76,11 +76,11 @@ msgstr "Nombre"
 
 msgctxt "field:account.payment.type,write_date:"
 msgid "Write Date"
-msgstr "Fecha modificación"
+msgstr "Fecha de modificación"
 
 msgctxt "field:account.payment.type,write_uid:"
 msgid "Write User"
-msgstr "Usuario modificación"
+msgstr "Usuario de modificación"
 
 msgctxt "field:party.account.payment.type,company:"
 msgid "Company"
@@ -88,11 +88,11 @@ msgstr "Empresa"
 
 msgctxt "field:party.account.payment.type,create_date:"
 msgid "Create Date"
-msgstr "Fecha creación"
+msgstr "Fecha de creación"
 
 msgctxt "field:party.account.payment.type,create_uid:"
 msgid "Create User"
-msgstr "Usuario creación"
+msgstr "Usuario de creación"
 
 msgctxt "field:party.account.payment.type,customer_payment_type:"
 msgid "Customer Payment type"
@@ -104,7 +104,7 @@ msgstr "ID"
 
 msgctxt "field:party.account.payment.type,party:"
 msgid "Party"
-msgstr "Terceros"
+msgstr "Tercero"
 
 msgctxt "field:party.account.payment.type,rec_name:"
 msgid "Name"
@@ -116,11 +116,11 @@ msgstr "Tipo de pago de proveedor"
 
 msgctxt "field:party.account.payment.type,write_date:"
 msgid "Write Date"
-msgstr "Fecha modificación"
+msgstr "Fecha de modificación"
 
 msgctxt "field:party.account.payment.type,write_uid:"
 msgid "Write User"
-msgstr "Usuario modificación"
+msgstr "Usuario de modificación"
 
 msgctxt "field:party.party,customer_payment_type:"
 msgid "Customer Payment type"
@@ -132,7 +132,7 @@ msgstr "Tipo de pago de proveedor"
 
 msgctxt "help:account.payment.type,kind:"
 msgid "The kind of payment type."
-msgstr "Clase de tipo de pago."
+msgstr "El tipo del tipo de pago."
 
 msgctxt "help:account.payment.type,note:"
 msgid "Description of the payment type that will be shown in descriptions"
@@ -168,6 +168,10 @@ msgid "Party Account Payment Type"
 msgstr "Tipo de orden de pago de tercero"
 
 msgctxt "selection:account.invoice,payment_type_kind:"
+msgid "Both"
+msgstr "Ambos"
+
+msgctxt "selection:account.invoice,payment_type_kind:"
 msgid "Payable"
 msgstr "A pagar"
 
@@ -188,6 +192,10 @@ msgid "Receivable"
 msgstr "A cobrar"
 
 msgctxt "selection:account.payment.type,kind:"
+msgid "Both"
+msgstr "Ambos"
+
+msgctxt "selection:account.payment.type,kind:"
 msgid "Payable"
 msgstr "A pagar"
 
@@ -196,8 +204,8 @@ msgid "Receivable"
 msgstr "A cobrar"
 
 msgctxt "view:account.payment.type:"
-msgid "Payment Type"
-msgstr "Tipo de pago"
+msgid "Payments"
+msgstr "Pagos"
 
 msgctxt "view:party.party:"
 msgid "Payment types"
