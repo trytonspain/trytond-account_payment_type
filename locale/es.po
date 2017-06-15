@@ -2,6 +2,14 @@
 msgid ""
 msgstr "Content-Type: text/plain; charset=utf-8\n"
 
+msgctxt "error:account.move.line:"
+msgid ""
+"Can not set Payment Type in move line \"%s\" because account is not Payable "
+"nor Receivable."
+msgstr ""
+"No se puede establecer el tipo de orden de pago del apunte \"%s\" porque la "
+"cuenta no es a pagar ni a cobrar."
+
 msgctxt "error:account.payment.type:"
 msgid ""
 "It is not possible to modify the field \"%(field)s\" as the payment type "
@@ -18,13 +26,21 @@ msgctxt "field:account.invoice,payment_type_kind:"
 msgid "Kind of payment type"
 msgstr "Clase del tipo de pago"
 
+msgctxt "field:account.move.line,account_kind:"
+msgid "Kind"
+msgstr "Tipo"
+
+msgctxt "field:account.move.line,payment_type:"
+msgid "Payment Type"
+msgstr "Tipo de pago"
+
 msgctxt "field:account.payment.type,active:"
 msgid "Active"
 msgstr "Activo"
 
-msgctxt "field:account.payment.type,approve_payments:"
-msgid "Aprove Payments?"
-msgstr "Aprovar pagos?"
+msgctxt "field:account.payment.type,code:"
+msgid "Code"
+msgstr "Código"
 
 msgctxt "field:account.payment.type,company:"
 msgid "Company"
@@ -53,10 +69,6 @@ msgstr "Nombre"
 msgctxt "field:account.payment.type,note:"
 msgid "Description"
 msgstr "Descripción"
-
-msgctxt "field:account.payment.type,payment_journal:"
-msgid "Payment Journal"
-msgstr "Diario de pago"
 
 msgctxt "field:account.payment.type,rec_name:"
 msgid "Name"
@@ -92,7 +104,7 @@ msgstr "ID"
 
 msgctxt "field:party.account.payment.type,party:"
 msgid "Party"
-msgstr "Terceros"
+msgstr "Tercero"
 
 msgctxt "field:party.account.payment.type,rec_name:"
 msgid "Name"
@@ -118,22 +130,14 @@ msgctxt "field:party.party,supplier_payment_type:"
 msgid "Supplier Payment type"
 msgstr "Tipo de pago de proveedor"
 
-msgctxt "help:account.payment.type,approve_payments:"
-msgid "If marked, payments will be approved after creation"
-msgstr "Si se marca los pagos seran aprovados una vez creados"
+msgctxt "help:account.payment.type,kind:"
+msgid "The kind of payment type."
+msgstr "El tipo del tipo de pago."
 
 msgctxt "help:account.payment.type,note:"
 msgid "Description of the payment type that will be shown in descriptions"
 msgstr ""
 "Información extra del tipo de pago que se mostrará en las descripciones"
-
-msgctxt "help:account.payment.type,payment_journal:"
-msgid ""
-"The payment journal for creating payments when the invoices are posted. A "
-"payment for each maturity date will be created."
-msgstr ""
-"El diario de pagos utilizado para crear pagos cuando se confirman las "
-"facturas. Se creara un pago para cada fecha de vencimiento."
 
 msgctxt "help:party.party,customer_payment_type:"
 msgid "Payment type of the customer."
@@ -155,6 +159,10 @@ msgctxt "model:ir.ui.menu,name:menu_account_payment_type_form"
 msgid "Payment Types"
 msgstr "Tipos de pago"
 
+msgctxt "model:ir.ui.menu,name:menu_payment_types_configuration"
+msgid "Payment Types"
+msgstr "Tipos de pago"
+
 msgctxt "model:party.account.payment.type,name:"
 msgid "Party Account Payment Type"
 msgstr "Tipo de orden de pago de tercero"
@@ -168,6 +176,18 @@ msgid "Payable"
 msgstr "A pagar"
 
 msgctxt "selection:account.invoice,payment_type_kind:"
+msgid "Receivable"
+msgstr "A cobrar"
+
+msgctxt "selection:account.move.line,account_kind:"
+msgid ""
+msgstr ""
+
+msgctxt "selection:account.move.line,account_kind:"
+msgid "Payable"
+msgstr "A pagar"
+
+msgctxt "selection:account.move.line,account_kind:"
 msgid "Receivable"
 msgstr "A cobrar"
 
