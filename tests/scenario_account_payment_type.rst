@@ -191,39 +191,6 @@ And where clearing all the lines the payable payment type is used::
     >>> invoice.untaxed_amount
     Decimal('0.00')
 
-Create both payment type::
-
-    >>> both = PaymentType(name='Both', kind='both')
-    >>> both.save()
-
-We can use both in negative and positive invoices::
-
-    >>> invoice = Invoice()
-    >>> invoice.party = party
-    >>> invoice.payment_term = payment_term
-    >>> line = invoice.lines.new()
-    >>> line.product = product
-    >>> line.quantity = 1
-    >>> line.unit_price = Decimal('50.0')
-    >>> invoice.payment_type = both
-    >>> invoice.untaxed_amount
-    Decimal('50.00')
-    >>> invoice.save()
-
-    >>> invoice.payment_type == both
-    True
-    >>> invoice = Invoice()
-    >>> invoice.party = party
-    >>> invoice.payment_term = payment_term
-    >>> line = invoice.lines.new()
-    >>> line.product = product
-    >>> line.quantity = -1
-    >>> line.unit_price = Decimal('40.0')
-    >>> invoice.payment_type = both
-    >>> invoice.save()
-    >>> invoice.payment_type == both
-    True
-
 Post an invoice with payment type::
 
     >>> invoice = Invoice()

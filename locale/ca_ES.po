@@ -167,10 +167,6 @@ msgid "Party Account Payment Type"
 msgstr "Tipus d'ordre de pagament de tercer"
 
 msgctxt "selection:account.invoice,payment_type_kind:"
-msgid "Both"
-msgstr "Ambdós"
-
-msgctxt "selection:account.invoice,payment_type_kind:"
 msgid "Payable"
 msgstr "A pagar"
 

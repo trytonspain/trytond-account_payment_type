@@ -27,14 +27,14 @@ class Party:
 
     customer_payment_type = fields.Function(fields.Many2One(
             'account.payment.type', 'Customer Payment type', domain=[
-                ('kind', 'in', ['both', 'receivable']),
+                ('kind', '=', 'receivable'),
                 ],
             help='Payment type of the customer.'),
         'get_payment_type', setter='set_payment_type',
         searcher='search_payment_type')
     supplier_payment_type = fields.Function(fields.Many2One(
             'account.payment.type', string='Supplier Payment type', domain=[
-                ('kind', 'in', ['both', 'payable']),
+                ('kind', '=', 'payable'),
                 ],
             help='Payment type of the supplier.'),
         'get_payment_type', setter='set_payment_type',

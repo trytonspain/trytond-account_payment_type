@@ -23,7 +23,7 @@ class Invoice:
         'on_change_with_payment_type_kind')
     payment_type = fields.Many2One('account.payment.type', 'Payment Type',
         domain=[
-            ('kind', 'in', ['both', Eval('payment_type_kind')]),
+            ('kind', '=', Eval('payment_type_kind')),
             ],
         states={
             'readonly': Not(Bool(Eval('state').in_(['draft', 'validated']))),

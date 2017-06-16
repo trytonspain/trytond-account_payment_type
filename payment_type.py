@@ -9,7 +9,6 @@ from trytond.transaction import Transaction
 __all__ = ['PaymentType']
 
 KINDS = [
-    ('both', 'Both'),
     ('payable', 'Payable'),
     ('receivable', 'Receivable'),
     ]
@@ -57,7 +56,7 @@ class PaymentType(ModelSQL, ModelView):
 
     @classmethod
     def default_kind(cls):
-        return 'both'
+        return 'receivable'
 
     def get_rec_name(self, name):
         if self.code:
