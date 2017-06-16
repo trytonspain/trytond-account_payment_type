@@ -22,12 +22,12 @@ Create database::
     >>> config = config.set_trytond()
     >>> config.pool.test = True
 
-Install account_invoice::
+Install account_payment_type::
 
     >>> Module = Model.get('ir.module')
-    >>> account_invoice_module, = Module.find(
+    >>> account_payment_type_module, = Module.find(
     ...     [('name', '=', 'account_payment_type')])
-    >>> Module.install([account_invoice_module.id], config.context)
+    >>> Module.install([account_payment_type_module.id], config.context)
     >>> Wizard('ir.module.install_upgrade').execute('upgrade')
 
 Create company::
