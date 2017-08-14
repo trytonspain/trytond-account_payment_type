@@ -51,7 +51,7 @@ Create chart of accounts::
 
     >>> _ = create_chart(company)
     >>> accounts = get_accounts(company)
-    >>> receivable = accounts['receivable']
+    >>> account_receivable = accounts['receivable']
     >>> revenue = accounts['revenue']
     >>> expense = accounts['expense']
     >>> cash = accounts['cash']
