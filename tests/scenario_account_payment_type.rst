@@ -8,17 +8,17 @@ Imports::
     >>> from dateutil.relativedelta import relativedelta
     >>> from decimal import Decimal
     >>> from operator import attrgetter
-    >>> from proteus import Model, Wizard
+    >>> from proteus import config, Model, Wizard
     >>> from trytond.tests.tools import activate_modules
     >>> from trytond.modules.company.tests.tools import create_company, \
     ...     get_company
     >>> from trytond.modules.account.tests.tools import create_fiscalyear, \
     ...     create_chart, get_accounts, create_tax, set_tax_code
-    >>> from trytond.modules.account_invoice.tests.tools import \
+    >>> from.trytond.modules.account_invoice.tests.tools import \
     ...     set_fiscalyear_invoice_sequences, create_payment_term
     >>> today = datetime.date.today()
 
-Install account_payment_type Module::
+Install account_payment_type::
 
     >>> config = activate_modules('account_payment_type')
 
@@ -39,9 +39,9 @@ Create chart of accounts::
     >>> _ = create_chart(company)
     >>> accounts = get_accounts(company)
     >>> account_receivable = accounts['receivable']
-    >>> account_revenue = accounts['revenue']
-    >>> account_expense = accounts['expense']
-    >>> account_cash = accounts['cash']
+    >>> revenue = accounts['revenue']
+    >>> expense = accounts['expense']
+    >>> cash = accounts['cash']
 
 Create tax::
 
@@ -61,8 +61,8 @@ Create product::
     >>> template.type = 'service'
     >>> template.list_price = Decimal('50')
     >>> template.cost_price = Decimal('25')
-    >>> template.account_expense = account_expense
-    >>> template.account_revenue = account_revenue
+    >>> template.account_expense = expense
+    >>> template.account_revenue = revenue
     >>> template.customer_taxes.append(tax)
     >>> template.save()
     >>> product.template = template
@@ -177,39 +177,6 @@ And where clearing all the lines the payable payment type is used::
     False
     >>> invoice.untaxed_amount
     Decimal('0.00')
-
-Create both payment type::
-
-    >>> both = PaymentType(name='Both', kind='both')
-    >>> both.save()
-
-We can use both in negative and positive invoices::
-
-    >>> invoice = Invoice()
-    >>> invoice.party = party
-    >>> invoice.payment_term = payment_term
-    >>> line = invoice.lines.new()
-    >>> line.product = product
-    >>> line.quantity = 1
-    >>> line.unit_price = Decimal('50.0')
-    >>> invoice.payment_type = both
-    >>> invoice.untaxed_amount
-    Decimal('50.00')
-    >>> invoice.save()
-    >>> invoice.payment_type == both
-    True
-
-    >>> invoice = Invoice()
-    >>> invoice.party = party
-    >>> invoice.payment_term = payment_term
-    >>> line = invoice.lines.new()
-    >>> line.product = product
-    >>> line.quantity = -1
-    >>> line.unit_price = Decimal('40.0')
-    >>> invoice.payment_type = both
-    >>> invoice.save()
-    >>> invoice.payment_type == both
-    True
 
 Post an invoice with payment type::
 
