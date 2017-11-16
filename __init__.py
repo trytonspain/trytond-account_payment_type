@@ -6,6 +6,8 @@ from . import move
 from . import payment_type
 from . import party
 from . import invoice
+from . import commission
+from . import work
 
 
 def register():
@@ -16,4 +18,6 @@ def register():
         party.PartyAccountPaymentType,
         party.Party,
         invoice.Invoice,
+        commission.Commission,
+        work.Work,
         module='account_payment_type', type_='model')
