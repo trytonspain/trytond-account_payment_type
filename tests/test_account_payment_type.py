@@ -85,7 +85,15 @@ def suite():
     suite = trytond.tests.test_tryton.suite()
     suite.addTests(unittest.TestLoader().loadTestsFromTestCase(
         AccountPaymentTypeTestCase))
-    suite.addTests(doctest.DocFileSuite('scenario_account_payment_type.rst',
+    # suite.addTests(doctest.DocFileSuite('scenario_account_payment_type.rst',
+    #         setUp=doctest_setup, tearDown=doctest_teardown, encoding='utf-8',
+    #         checker=doctest_checker,
+    #         optionflags=doctest.REPORT_ONLY_FIRST_FAILURE))
+    # suite.addTests(doctest.DocFileSuite('scenario_commission_payment_type.rst',
+    #         setUp=doctest_setup, tearDown=doctest_teardown, encoding='utf-8',
+    #         checker=doctest_checker,
+    #         optionflags=doctest.REPORT_ONLY_FIRST_FAILURE))
+    suite.addTests(doctest.DocFileSuite('scenario_project_invoice_payment_type.rst',
             setUp=doctest_setup, tearDown=doctest_teardown, encoding='utf-8',
             checker=doctest_checker,
             optionflags=doctest.REPORT_ONLY_FIRST_FAILURE))
