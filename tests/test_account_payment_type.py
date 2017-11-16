@@ -87,6 +87,14 @@ def suite():
         AccountPaymentTypeTestCase))
     suite.addTests(doctest.DocFileSuite('scenario_account_payment_type.rst',
             tearDown=doctest_teardown, encoding='utf-8',
-            checker=doctest_checker,
-            optionflags=doctest.REPORT_ONLY_FIRST_FAILURE))
+            optionflags=doctest.REPORT_ONLY_FIRST_FAILURE,
+            checker=doctest_checker))
+    suite.addTests(doctest.DocFileSuite('scenario_commission_payment_type.rst',
+            tearDown=doctest_teardown, encoding='utf-8',
+            optionflags=doctest.REPORT_ONLY_FIRST_FAILURE,
+            checker=doctest_checker))
+    suite.addTests(doctest.DocFileSuite('scenario_project_invoice_payment_type.rst',
+            tearDown=doctest_teardown, encoding='utf-8',
+            optionflags=doctest.REPORT_ONLY_FIRST_FAILURE,
+            checker=doctest_checker))
     return suite
