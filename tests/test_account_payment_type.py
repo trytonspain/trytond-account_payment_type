@@ -93,7 +93,8 @@ def suite():
             tearDown=doctest_teardown, encoding='utf-8',
             optionflags=doctest.REPORT_ONLY_FIRST_FAILURE,
             checker=doctest_checker))
-    suite.addTests(doctest.DocFileSuite('scenario_project_invoice_payment_type.rst',
+    suite.addTests(doctest.DocFileSuite(
+            'scenario_project_invoice_payment_type.rst',
             tearDown=doctest_teardown, encoding='utf-8',
             optionflags=doctest.REPORT_ONLY_FIRST_FAILURE,
             checker=doctest_checker))

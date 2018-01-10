@@ -59,8 +59,8 @@ class Line:
     def copy(cls, lines, default=None):
         if default is None:
             default = {}
-        if (Transaction().context.get('cancel_move') and not 'payment_type' in
-                default):
+        if (Transaction().context.get('cancel_move')
+                and 'payment_type' not in default):
             default['payment_type'] = None
         return super(Line, cls).copy(lines, default)
 
