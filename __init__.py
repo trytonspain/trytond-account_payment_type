@@ -18,6 +18,12 @@ def register():
         party.PartyAccountPaymentType,
         party.Party,
         invoice.Invoice,
+        module='account_payment_type', type_='model')
+    Pool.register(
         commission.Commission,
+        depends=['commission'],
+        module='account_payment_type', type_='model')
+    Pool.register(
         work.Work,
+        depends=['project_invoice'],
         module='account_payment_type', type_='model')

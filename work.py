@@ -17,4 +17,5 @@ class Work:
             invoice.payment_type = customer_payment_type
             if hasattr(invoice, 'on_change_with_bank_account'):
                 invoice.on_change_with_bank_account()
+
         return invoice

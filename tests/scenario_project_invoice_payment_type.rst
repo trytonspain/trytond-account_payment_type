@@ -111,6 +111,7 @@ Create a Project::
     >>> task.work = work
     >>> task.type = 'task'
     >>> task.product = product
+    >>> task.party = customer
     >>> task.effort_duration = datetime.timedelta(hours=5)
     >>> project.children.append(task)
     >>> project.save()
