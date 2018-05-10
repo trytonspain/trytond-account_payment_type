@@ -4,8 +4,8 @@ The COPYRIGHT file at the top level of this repository contains the full
 copyright notices and license types. -->
 <tree>
     <field name="name"/>
+    <field name="code"/>
     <field name="kind"/>
     <field name="company"/>
     <field name="active" tree_invisible="1"/>
 </tree>
-

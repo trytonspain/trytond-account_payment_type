@@ -5,6 +5,8 @@ copyright notices and license types. -->
 <form col="4">
     <label name="name"/>
     <field name="name"/>
+    <label name="code"/>
+    <field name="code"/>
     <label name="active"/>
     <field name="active"/>
     <label name="kind"/>
