@@ -11,8 +11,7 @@ __all__ = ['Invoice']
 ZERO = Decimal('0.0')
 
 
-class Invoice:
-    __metaclass__ = PoolMeta
+class Invoice(metaclass=PoolMeta):
     __name__ = 'account.invoice'
     payment_type_kind = fields.Function(fields.Selection(KINDS,
             'Kind of payment type',

@@ -9,8 +9,7 @@ from trytond.transaction import Transaction
 __all__ = ['Move', 'Line']
 
 
-class Move:
-    __metaclass__ = PoolMeta
+class Move(metaclass=PoolMeta):
     __name__ = 'account.move'
 
     def cancel(self, default=None):
@@ -18,8 +17,7 @@ class Move:
             return super(Move, self).cancel(default=default)
 
 
-class Line:
-    __metaclass__ = PoolMeta
+class Line(metaclass=PoolMeta):
     __name__ = 'account.move.line'
 
     account_kind = fields.Function(fields.Selection([

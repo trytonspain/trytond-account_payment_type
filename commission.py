@@ -4,8 +4,7 @@
 from trytond.pool import PoolMeta
 __all__ = ['Commission']
 
-class Commission:
-    __metaclass__ = PoolMeta
+class Commission(metaclass=PoolMeta):
     __name__ = 'commission'
 
     @classmethod

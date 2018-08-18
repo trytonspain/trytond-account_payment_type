@@ -27,8 +27,7 @@ class PartyAccountPaymentType(CompanyValueMixin, ModelSQL):
     supplier_payment_type = supplier_payment_type
 
 
-class Party:
-    __metaclass__ = PoolMeta
+class Party(metaclass=PoolMeta):
     __name__ = 'party.party'
 
     customer_payment_type = fields.MultiValue(customer_payment_type)

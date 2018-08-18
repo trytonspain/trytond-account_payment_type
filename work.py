@@ -6,8 +6,7 @@ from trytond.pool import PoolMeta
 __all__ = ['Work']
 
 
-class Work:
-    __metaclass__ = PoolMeta
+class Work(metaclass=PoolMeta):
     __name__ = 'project.work'
 
     def _get_invoice(self):
