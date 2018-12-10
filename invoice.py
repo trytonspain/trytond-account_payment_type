@@ -44,8 +44,7 @@ class Invoice(metaclass=PoolMeta):
                     return 'receivable'
         return 'receivable' if self.type == 'out' else 'payable'
 
-    @fields.depends('payment_type', 'party', 'company', 'type',
-        'untaxed_amount', 'lines')
+    @fields.depends('party', 'company', 'type', 'untaxed_amount', 'lines')
     def on_change_with_payment_type(self, name=None):
         if self.payment_type and self.payment_type.kind == 'both':
             return self.payment_type.id
