@@ -46,15 +46,19 @@ class Invoice(metaclass=PoolMeta):
 
     @fields.depends('party', 'company', 'type', 'untaxed_amount', 'lines')
     def on_change_with_payment_type(self, name=None):
-        if self.payment_type and self.payment_type.kind == 'both':
+        if (hasattr(self, 'payment_type') and self.payment_type
+                and self.payment_type.kind == 'both'):
             return self.payment_type.id
 
         kind = self.on_change_with_payment_type_kind()
-        if self.payment_type and self.payment_type.kind == kind:
+        if (hasattr(self, 'payment_type') and self.payment_type
+                and self.payment_type.kind == kind):
             return self.payment_type.id
 
         if not self.untaxed_amount:
-            return self.payment_type.id if self.payment_type else None
+            return (self.payment_type.id
+                if (hasattr(self, 'payment_type') and self.payment_type)
+                else None)
 
         for party in [
                 self.party,

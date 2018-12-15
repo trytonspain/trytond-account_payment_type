@@ -134,10 +134,8 @@ And where clearing all the lines the recevaible payment type is used::
     >>> _ = invoice.lines.pop()
     >>> _ = invoice.lines.pop()
     >>> _ = invoice.lines.pop()
-    >>> invoice.payment_type == receivable
+    >>> invoice.payment_type == None
     True
-    >>> invoice.payment_type == payable
-    False
     >>> invoice.untaxed_amount
     Decimal('0.00')
 
@@ -178,10 +176,8 @@ And where clearing all the lines the payable payment type is used::
     >>> _ = invoice.lines.pop()
     >>> _ = invoice.lines.pop()
     >>> _ = invoice.lines.pop()
-    >>> invoice.payment_type == payable
+    >>> invoice.payment_type == None
     True
-    >>> invoice.payment_type == receivable
-    False
     >>> invoice.untaxed_amount
     Decimal('0.00')
 
