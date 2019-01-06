@@ -5,6 +5,8 @@ from trytond.model import fields
 from trytond.pool import PoolMeta
 from trytond.pyson import Eval, Bool
 from trytond.transaction import Transaction
+from trytond.i18n import gettext
+from trytond.exceptions import UserWarning
 
 __all__ = ['Move', 'Line']
 
@@ -41,11 +43,6 @@ class Line(metaclass=PoolMeta):
         super(Line, cls).__setup__()
         if hasattr(cls, '_check_modify_exclude'):
             cls._check_modify_exclude.add('payment_type')
-        cls._error_messages.update({
-                'invalid_account_payment_type': ('Can not set Payment Type in '
-                    'move line "%s" because account is not Payable nor '
-                    'Receivable.'),
-                })
 
     @classmethod
     def validate(cls, lines):
@@ -65,8 +62,9 @@ class Line(metaclass=PoolMeta):
     def check_account_payment_type(self):
         if (self.payment_type
                 and self.account.kind not in ('payable', 'receivable')):
-            self.raise_user_error('invalid_account_payment_type',
-                (self.rec_name,))
+            raise UserError(gettext(
+                'account_payment_type.invalid_account_payment_type',
+                payment=self.rec_name))
 
     @fields.depends('account', 'credit', 'debit')
     def on_change_with_account_kind(self, name=None):

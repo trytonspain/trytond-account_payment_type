@@ -5,6 +5,8 @@ from trytond.model import ModelView, ModelSQL, fields
 from trytond.pyson import Eval, If
 from trytond.pool import Pool
 from trytond.transaction import Transaction
+from trytond.i18n import gettext
+from trytond.exceptions import UserWarning
 
 __all__ = ['PaymentType']
 
@@ -41,11 +43,6 @@ class PaymentType(ModelSQL, ModelView):
                 ('account.move.line', 'payment_type'),
                 ('account.invoice', 'payment_type'),
                 ])
-        cls._error_messages.update({
-                'modifiy_with_related_model': ('It is not possible to modify '
-                    'the field "%(field)s" as the payment type "%(type)s" is '
-                    'used on %(model)s "%(name)s"'),
-                })
 
     @staticmethod
     def default_active():
@@ -94,10 +91,9 @@ class PaymentType(ModelSQL, ModelView):
                         ], limit=1)
                 # Use payment from record to be coherent in error message
                 payment_type = getattr(record, field_name)
-                error_args = {
-                    'name': record.rec_name,
-                    'model': model.name,
-                    'type': payment_type.rec_name,
-                    'field': field.field_description,
-                    }
-                cls.raise_user_error('modifiy_with_related_model', error_args)
+                raise UserError(gettext(
+                    'account_payment_type.modifiy_with_related_model',
+                    name=record.rec_name,
+                    model=model.name,
+                    type=payment_type.rec_name,
+                    field=field.field_description))

@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!-- This file is part of Tryton.  The COPYRIGHT file at the top level of
+this repository contains the full copyright notices and license terms. -->
+<tryton>
+    <data group="1">
+        <record model="ir.message" id="modifiy_with_related_model">
+            <field name="text">It is not possible to modify the field "%(field)s" as the payment type "%(type)s" is used on %(model)s "%(name)s"</field>
+        </record>
+        <record model="ir.message" id="invalid_account_payment_type">
+            <field name="text">Can not set Payment Type in move line "%(payment)s" because account is not Payable nor Receivable.</field>
+        </record>
+      </data>
+</tryton>
