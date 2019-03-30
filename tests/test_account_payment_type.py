@@ -44,13 +44,13 @@ class AccountPaymentTypeTestCase(ModuleTestCase):
                     ('code', '=', 'REV'),
                     ])
             revenue, = Account.search([
-                    ('kind', '=', 'revenue'),
+                    ('type.revenue', '=', True),
                     ])
             receivable, = Account.search([
-                    ('kind', '=', 'receivable'),
+                    ('type.receivable', '=', True),
                     ])
             payable, = Account.search([
-                    ('kind', '=', 'payable'),
+                    ('type.payable', '=', True),
                     ])
             payment_payable, = PaymentType.create([{
                     'name': 'Payment Payable',

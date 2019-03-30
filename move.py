@@ -61,27 +61,32 @@ class Line(metaclass=PoolMeta):
 
     def check_account_payment_type(self):
         if (self.payment_type
-                and self.account.kind not in ('payable', 'receivable')):
+                and self.account.type.payable == False
+                and self.account.type.receivable == False ):
             raise UserError(gettext(
                 'account_payment_type.invalid_account_payment_type',
                 payment=self.rec_name))
 
     @fields.depends('account', 'credit', 'debit')
     def on_change_with_account_kind(self, name=None):
-        if self.account and self.account.kind in ('payable', 'receivable'):
+        if self.account and (self.account.type.payable or
+                self.account.type.receivable):
             if self.credit > 0 or self.debit < 0:
                 return 'payable'
             elif self.debit > 0 or self.credit < 0:
                 return 'receivable'
-            return self.account.kind
+            return 'receivable' if self.account.type.receivable else 'payable'
         return ''
 
     @classmethod
     def search_account_kind(cls, name, clause):
-        return [('account.kind',) + tuple(clause[1:])]
+        value = clause[2]
+        return [('account.type.%s'%value,) + tuple(clause[1], True)]
 
     @fields.depends('account')
     def on_change_account(self):
         super(Line, self).on_change_account()
-        if self.account and self.account.kind in ('payable', 'receivable'):
-            self.account_kind = self.account.kind
+        if self.account and (self.account.type.payable == True
+                or self.account.type.receivable == True):
+            self.account_kind = ('payable' if self.account.type.payable
+                else 'receivable')
