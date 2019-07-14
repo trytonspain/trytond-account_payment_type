@@ -6,7 +6,7 @@ from trytond.pyson import Eval, If
 from trytond.pool import Pool
 from trytond.transaction import Transaction
 from trytond.i18n import gettext
-from trytond.exceptions import UserWarning
+from trytond.exceptions import UserError
 
 __all__ = ['PaymentType']
 
