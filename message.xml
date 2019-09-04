@@ -2,7 +2,7 @@
 <!-- This file is part of Tryton.  The COPYRIGHT file at the top level of
 this repository contains the full copyright notices and license terms. -->
 <tryton>
-    <data group="1">
+    <data grouped="1">
         <record model="ir.message" id="modifiy_with_related_model">
             <field name="text">It is not possible to modify the field "%(field)s" as the payment type "%(type)s" is used on %(model)s "%(name)s"</field>
         </record>
