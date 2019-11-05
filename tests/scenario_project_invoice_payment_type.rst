@@ -105,7 +105,6 @@ Create a Project::
     >>> work = TimesheetWork()
     >>> work.name = 'Test effort'
     >>> work.save()
-    >>> project.work = work
     >>> project.type = 'project'
     >>> project.party = customer
     >>> project.project_invoice_method = 'effort'
@@ -116,7 +115,6 @@ Create a Project::
     >>> work = TimesheetWork()
     >>> work.name = 'Task 1'
     >>> work.save()
-    >>> task.work = work
     >>> task.type = 'task'
     >>> task.product = product
     >>> task.party = customer
