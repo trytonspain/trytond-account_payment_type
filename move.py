@@ -6,7 +6,7 @@ from trytond.pool import PoolMeta
 from trytond.pyson import Eval, Bool
 from trytond.transaction import Transaction
 from trytond.i18n import gettext
-from trytond.exceptions import UserWarning
+from trytond.exceptions import UserError
 
 __all__ = ['Move', 'Line']
 
