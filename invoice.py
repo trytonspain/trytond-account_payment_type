@@ -29,6 +29,13 @@ class Invoice(metaclass=PoolMeta):
             },
         depends=['payment_type_kind', 'state'])
 
+    @classmethod
+    def __setup__(cls):
+        super().__setup__()
+        cls.payment_direct_debit.states = {
+            'invisible': True,
+        }
+
     @fields.depends('type', 'untaxed_amount', 'lines')
     def on_change_with_payment_type_kind(self, name=None):
         if self.untaxed_amount:
