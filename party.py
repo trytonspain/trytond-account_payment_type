@@ -36,6 +36,13 @@ class Party(metaclass=PoolMeta):
         "Payment Types")
 
     @classmethod
+    def __setup__(cls):
+        super().__setup__()
+        cls.payment_direct_debit.states = {
+            'invisible': True,
+        }
+
+    @classmethod
     def multivalue_model(cls, field):
         pool = Pool()
         if field in ['customer_payment_type', 'supplier_payment_type']:
