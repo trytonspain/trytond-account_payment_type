@@ -7,6 +7,7 @@ from trytond.pyson import Eval, Bool
 from trytond.transaction import Transaction
 from trytond.i18n import gettext
 from trytond.exceptions import UserError
+from trytond.modules.account_payment_type.payment_type import KINDS
 
 __all__ = ['Move', 'Line']
 
@@ -37,6 +38,13 @@ class Line(metaclass=PoolMeta):
                 'invisible': ~Eval('account_kind', '').in_(
                     ['payable', 'receivable']),
             })
+    payment_type_kind = fields.Function(fields.Selection(KINDS,
+            'Kind of payment type',
+            states={
+                'invisible': True,
+                },
+            ),
+        'on_change_with_payment_type_kind')
 
     @classmethod
     def __setup__(cls):
@@ -90,3 +98,8 @@ class Line(metaclass=PoolMeta):
                 or self.account.type.receivable == True):
             self.account_kind = ('payable' if self.account.type.payable
                 else 'receivable')
+
+    @fields.depends('payment_type')
+    def on_change_with_payment_type_kind(self, name=None):
+        if self.payment_type:
+            return self.payment_type.kind
