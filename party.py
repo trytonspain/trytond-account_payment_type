@@ -4,6 +4,7 @@
 from trytond.model import ModelSQL, fields
 from trytond.pool import PoolMeta, Pool
 from trytond.modules.company.model import CompanyValueMixin
+from trytond.transaction import Transaction
 
 __all__ = ['PartyAccountPaymentType', 'Party']
 customer_payment_type = fields.Many2One(
@@ -38,9 +39,25 @@ class Party(metaclass=PoolMeta):
     @classmethod
     def __setup__(cls):
         super().__setup__()
+        cls.customer_payment_type.searcher = 'search_payment_type'
+        cls.supplier_payment_type.searcher = 'search_payment_type'
         cls.payment_direct_debit.states = {
             'invisible': True,
         }
+
+    @classmethod
+    def search_payment_type(cls, name, clause):
+        User = Pool().get('res.user')
+        user = User(Transaction().user)
+        if not user.company:
+            return []
+        company_id = user.company.id
+
+        field = clause[0]
+        return [
+            ('payment_types.%s' % field,) + tuple(clause[1:]),
+            ('payment_types.company', '=', company_id)
+            ]
 
     @classmethod
     def multivalue_model(cls, field):
