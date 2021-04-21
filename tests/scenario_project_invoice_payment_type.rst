@@ -96,6 +96,11 @@ Create product::
     >>> product.template = template
     >>> product.save()
 
+Get status::
+
+    >>> WorkStatus = Model.get('project.work.status')
+    >>> done, = WorkStatus.find([('name', '=', "Done")])
+
 Create a Project::
 
     >>> ProjectWork = Model.get('project.work')
@@ -126,16 +131,12 @@ Create a Project::
 Check project duration::
 
     >>> project.reload()
-    >>> project.invoiced_duration
-    datetime.timedelta(0)
-    >>> project.duration_to_invoice
-    datetime.timedelta(0)
     >>> project.invoiced_amount
     Decimal('0')
 
 Do 1 task::
 
-    >>> task.state = 'done'
+    >>> task.status = done
     >>> task.save()
 
 Invoice project::
