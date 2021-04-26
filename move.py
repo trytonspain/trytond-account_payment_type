@@ -71,9 +71,9 @@ class Line(metaclass=PoolMeta):
     def on_change_with_account_kind(self, name=None):
         if self.account and (self.account.type.payable or
                 self.account.type.receivable):
-            if self.credit > 0 or self.debit < 0:
+            if (self.credit or 0) > 0 or (self.debit or 0) < 0:
                 return 'payable'
-            elif self.debit > 0 or self.credit < 0:
+            elif (self.debit or 0) > 0 or (self.credit or 0) < 0:
                 return 'receivable'
             return 'receivable' if self.account.type.receivable else 'payable'
         return ''
